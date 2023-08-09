@@ -1,0 +1,36 @@
+tr th,
+td {
+  text-align: center;
+}
+#title-user-mana {
+  color: rgb(40, 145, 40);
+  /* position: fixed; */
+  width: 100%;
+  margin: 10px 20px 0 !important;
+  background-color: white;
+  padding: 20px;
+  z-index: 1000;
+}
+td img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.active-admin {
+  font-weight: 700;
+}
+tr td {
+  height: 66px;
+  line-height: 66px;
+}
+thead tr th {
+  background-color: #e35959 !important;
+  color: white !important;
+}
+
+#sec-right img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}

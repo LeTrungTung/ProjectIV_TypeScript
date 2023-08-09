@@ -1,0 +1,23 @@
+footer {
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  margin-top: auto;
+  text-align: center;
+}
+
+footer span {
+  margin-right: 60px;
+  cursor: pointer;
+}
+
+footer span:hover {
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  footer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+}

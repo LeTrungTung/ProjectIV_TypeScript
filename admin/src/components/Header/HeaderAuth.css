@@ -1,0 +1,17 @@
+header {
+  margin: 0;
+  background-color: rgb(243, 246, 247) !important;
+  align-items: center;
+  padding-left: 50px;
+  text-align: left;
+}
+
+header img {
+  width: 100px;
+}
+#header-admin {
+  background-color: rgb(243, 246, 247) !important;
+}
+.content-body {
+  padding-top: 32px;
+}

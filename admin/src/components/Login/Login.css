@@ -1,0 +1,105 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.login-content {
+  flex-grow: 1;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  background-color: #31695679;
+}
+
+.nature-image {
+  width: 55%;
+  align-items: center;
+}
+.nature-image img {
+  height: 500px;
+  width: 100%;
+  object-fit: cover;
+  margin: auto;
+  border-radius: 20px;
+  display: block;
+}
+
+.login-form {
+  border-radius: 20px;
+  width: 35%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5f5;
+  background-image: url(https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+}
+
+.title-login {
+  margin-top: 20px;
+  color: rgb(226, 192, 203);
+}
+.title1-login {
+  color: rgb(209, 103, 27);
+  font-weight: 800;
+  text-shadow: 2px 4px 6px rgba(0, 0, 0, 0.8); /* Đổ bóng chữ */
+}
+
+form input {
+  width: 80%;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin: 16px 0;
+  outline: none;
+}
+
+form button {
+  width: 150px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #5d7b5f;
+  color: #e3ded2;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.error-log {
+  /* color: rgb(75, 44, 44);
+  text-align: left !important;
+  font-weight: 700;
+  margin: 0;
+  padding: 0; */
+
+  color: red;
+  /* text-align: left !important; */
+  font-weight: 600;
+  margin: 0 0 0 -190px;
+  padding: 0;
+  margin-top: -10px;
+  font-size: 14px;
+}
+.ed1 {
+  margin: 0 0 0 -220px;
+}
+.note-login {
+  color: rgb(206, 209, 194);
+  font-weight: 600;
+  margin-top: 15px;
+}
+.note-login a {
+  color: rgb(214, 218, 202);
+}

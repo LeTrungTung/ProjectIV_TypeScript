@@ -1,0 +1,9 @@
+#wrap-cards {
+  margin-top: 20px;
+}
+#id-itembar {
+  display: flex;
+}
+.cl-image img {
+  border-radius: 20px;
+}
