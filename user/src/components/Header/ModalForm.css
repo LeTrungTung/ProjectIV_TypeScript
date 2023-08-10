@@ -1,0 +1,16 @@
+.btn-primary {
+  margin-left: 0 !important;
+}
+.ctr-form {
+  text-align: center;
+}
+#modal-title {
+  margin-left: 130px !important;
+  color: rgb(50, 101, 137);
+}
+.btn-create-new {
+  margin-bottom: 20px !important;
+}
+.btn-close-modal {
+  margin-left: 30px !important;
+}

@@ -1,0 +1,126 @@
+#id-header {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff; /* Đổi màu nền theo ý muốn */
+  z-index: 999; /* Đặt độ ưu tiên hiển thị trên các phần tử khác */
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+#logo img {
+  width: 150px;
+}
+
+#title-header {
+  display: flex;
+  gap: 50px;
+  font-weight: 600;
+}
+
+#title-header a {
+  text-decoration: none;
+}
+
+#btn-header {
+  display: flex;
+  gap: 30px;
+}
+
+#btn-login {
+  background-color: #ad081b;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+#btn-register {
+  background-color: #e2e2e2;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+#right-header {
+  display: flex;
+  gap: 70px;
+  align-items: center;
+}
+
+/* Responsive Styles */
+
+@media (max-width: 768px) {
+  /* Styles for tablets */
+  #id-header {
+    padding: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #logo img {
+    width: 120px;
+  }
+
+  #title-header {
+    flex-basis: 100%;
+    font-size: 14px;
+    justify-content: center;
+  }
+
+  #btn-header {
+    flex-basis: 100%;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  #btn-login,
+  #btn-register {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  #right-header {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Styles for mobile devices */
+  #id-header {
+    padding: 8px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #logo img {
+    width: 100px;
+  }
+
+  #title-header {
+    flex-basis: 100%;
+    font-size: 12px;
+    justify-content: center;
+  }
+
+  #btn-header {
+    flex-basis: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  #btn-login,
+  #btn-register {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  #right-header {
+    gap: 30px;
+  }
+}

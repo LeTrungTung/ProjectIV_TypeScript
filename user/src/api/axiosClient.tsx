@@ -4,13 +4,15 @@ import axios, {
 } from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:4000/",
-  headers: { "Content-Type": "application/json" },
+  baseURL: "http://localhost:4000",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 axiosClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    let token: string | null = null;
+    let token;
     try {
       const tokenJson = await localStorage.getItem("token");
       token = JSON.parse(tokenJson || null);
@@ -23,17 +25,16 @@ axiosClient.interceptors.request.use(
 
     return config;
   },
-  (error: any) => {
-    Promise.reject(error);
+  (error) => {
+    return Promise.reject(error);
   }
 );
 // after send request
-// làm điều gì đso sau khi respon trả về
 axiosClient.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
-  (error: any) => {
+  (error) => {
     return Promise.reject(error);
   }
 );

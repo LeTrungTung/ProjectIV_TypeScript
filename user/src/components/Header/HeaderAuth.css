@@ -1,0 +1,11 @@
+header {
+  margin: 0;
+  background-color: rgba(180, 214, 235, 0.572);
+  align-items: center;
+  padding-left: 50px;
+  text-align: left;
+}
+
+header img {
+  width: 100px;
+}

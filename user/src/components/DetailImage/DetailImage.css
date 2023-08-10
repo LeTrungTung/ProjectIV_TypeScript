@@ -1,0 +1,468 @@
+#wrap-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* gap: 30px; */
+  width: 80%;
+  border: none;
+  border-radius: 50px;
+  margin-top: 100px;
+  -webkit-box-shadow: 4px 5px 3px -1px rgba(147, 191, 170, 1);
+  -moz-box-shadow: 4px 5px 3px -1px rgba(147, 191, 170, 1);
+  box-shadow: 4px 5px 3px -1px rgba(147, 191, 170, 1);
+  margin-bottom: 20px;
+}
+#img-detail {
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  /* display: block; */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+#document-save {
+  display: flex;
+  gap: 15px;
+}
+
+#id-save {
+  padding: 12px 18px;
+  background-color: rgb(247, 58, 58);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-weight: 700;
+  opacity: 0.9;
+  transition: 0.2s;
+}
+
+#id-save:hover {
+  opacity: 1;
+}
+
+#id-document {
+  padding: 10px 10px 10px 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+#top-right {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+#right-area {
+  /* flex: 35%; */
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  justify-content: space-between;
+}
+#avatar-comment {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+#bottom-comment {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  /* padding: 10px 30px 10px; */
+  align-items: center;
+}
+#add-content-comment {
+  border: none;
+  background-color: #e1e1e1;
+  border-radius: 40px;
+  padding: 12px;
+  width: 100%;
+  position: relative;
+  outline: 1px solid #ccc;
+}
+#add-content-comment:focus {
+  background-color: #ffffff;
+  color: #000000; /* Màu chữ đen */
+  border: 1px solid #cccccc; /* Viền 1px, màu xám */
+  transition: background-color 0.3s ease; /* Hiệu ứng mượt mà */
+}
+#id-dot:hover,
+#id-arrowdown:hover {
+  background-color: #e1e1e1;
+  cursor: pointer;
+  border: none;
+  background-size: 100px;
+  border-width: 10px;
+  border-radius: 50%;
+}
+#id-dot,
+#id-arrowdown {
+  width: 25px;
+  height: 25px;
+  color: grey;
+  padding: 10px;
+  box-sizing: content-box;
+}
+#id-dots,
+#id-heart {
+  cursor: pointer;
+}
+#btn-add-comment {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: none;
+  color: rgb(179, 95, 95);
+  /* padding: 5px; */
+  font-size: 22px;
+  position: absolute;
+  /* right: 14%;
+  bottom: -18%; */
+  margin-left: -70px;
+  margin-top: -18px;
+}
+.active {
+  color: red !important;
+}
+#count-love-coment {
+  cursor: pointer;
+  margin-left: 3px;
+}
+.saved {
+  color: white !important;
+  background-color: black !important;
+}
+#id-source-img,
+#id-title-image,
+#id-count-comment,
+#id-count-comment,
+#id-descrip-img {
+  text-align: left;
+  padding-left: 30px;
+}
+#id-count-comment h5 {
+  margin-top: -20px;
+}
+
+#userCreate-follow {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+#avatar-create-img {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+#btn-follow {
+  padding: 15px 20px;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  background-color: #afe5e7;
+}
+#avatar-create-img img {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+#sp-username {
+  font-weight: 700;
+}
+#userCreate-follow-left {
+  display: flex;
+  column-gap: 10px;
+}
+#username-count-follow {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.show-comment {
+  display: flex;
+  column-gap: 15px;
+  margin-left: 30px;
+  padding-bottom: 15px;
+}
+.avatar-comment img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.view-comment {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.content-comment {
+  margin-left: 15px;
+}
+.view-comment b:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.action-comment {
+  display: flex;
+  column-gap: 30px;
+}
+.ans-comment {
+  font-weight: 600px;
+  color: grey;
+}
+.ans-heart {
+  display: flex;
+  align-items: center;
+}
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+  --bs-gutter-x: 0 !important;
+}
+#you-think {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 30px;
+  border-top: 0.5px solid #ccc;
+  /* vertical-align: middle;
+  justify-items: center; */
+  align-items: center;
+}
+.emotion-image {
+  /* font-size: 40px; */
+  /* font-weight: 800; */
+  /* position: relative; */
+  transition: all 2s ease;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.emotion-icon {
+  font-size: 40px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #ccc;
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu */
+}
+.emotion-icon:hover {
+  color: darkred; /* Màu khi hover */
+  background-color: rgb(156, 156, 194); /* Màu nền khi hover */
+}
+
+#wrap-heart {
+  position: relative;
+}
+.emotion-icons {
+  position: absolute;
+  top: -60px; /* Vị trí hiển thị phía trên */
+  left: -90px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  display: flex;
+  gap: 10px;
+  padding: 5px 20px;
+  background-color: #fff;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+}
+#wrap-heart:hover .emotion-icons {
+  visibility: visible;
+  opacity: 1;
+}
+
+.heart-icon {
+  /* width: 30px;
+  height: 30px; */
+  transition: transform 0.3s ease;
+  color: goldenrod;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.heart-icon b,
+.thank-icon b {
+  font-size: 0.5em;
+  color: black;
+}
+
+.thank-icon {
+  /* width: 30px;
+  height: 30px; */
+  transition: transform 0.3s ease;
+  color: rgb(59, 152, 206);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.heart-icon:hover,
+.thank-icon:hover {
+  transform: scale(1.5) translateY(-15px);
+}
+.icon-users {
+  font-size: 23px;
+  color: red;
+  line-height: 15px;
+}
+.count-icon-users {
+  font-size: 15px;
+  font-weight: 500;
+  align-items: center;
+}
+.icon-count {
+  display: flex;
+  align-content: center;
+}
+
+.render-user-operation {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  border: 1px solid #ccc;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background-color: white;
+  border-radius: 10px;
+  overflow-y: auto;
+  z-index: 999;
+}
+.render-user-operation p {
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  padding-bottom: 10px;
+}
+.row-render-user {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  padding: 20px;
+}
+.number-operation {
+  cursor: pointer;
+  margin-left: 5px;
+}
+.biso-heart {
+  color: goldenrod;
+  font-size: 25px;
+}
+.biso-heart1 {
+  color: goldenrod;
+  font-size: 30px;
+}
+.biso-heart2 {
+  color: rgb(59, 152, 206);
+  font-size: 30px;
+}
+.tag-face {
+  color: rgb(59, 152, 206);
+  font-size: 25px;
+}
+.avatar-name {
+  display: flex;
+  align-items: center;
+}
+.avatar-name img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.wrap-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cl-nameuser {
+  font-weight: 400;
+  font-size: 1.1em;
+}
+/* ------------------------ */
+#wrap-love-comment {
+  position: relative;
+}
+.show-user-love {
+  position: absolute;
+  top: 30px; /* Vị trí hiển thị phía trên */
+  left: -90px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  width: 130px;
+  height: 120px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  padding: 5px 10px;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+}
+#wrap-love-comment:hover .show-user-love {
+  visibility: visible;
+  opacity: 1;
+}
+.row-mini-love {
+  display: flex;
+  justify-content: space-between;
+}
+.row-mini-love img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.name-uselove {
+  font-size: 10px;
+  margin-left: 5px;
+}
+
+.heart-userlove {
+  background-color: white;
+  color: red;
+  padding: 3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.wrapper-comments {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6);
+}
