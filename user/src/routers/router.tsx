@@ -7,6 +7,8 @@ import Login from "../components/Login/Login";
 import Register from "../components/Register/Register";
 import { ImageAPI } from "../api/Image";
 import DefaultLayout from "../layouts/DefaultLayout/DefaultLayout";
+import ProfileLayout from "../layouts/ProfileLayout/ProfileLayout";
+import DetailImageLayout from "../layouts/DetailImageLayout/DetailImageLayout";
 
 export interface IDataImage {
   categoryImage: string;
@@ -48,9 +50,9 @@ const Router: React.FC = () => {
         path="/home"
         element={<DefaultLayout dataImage={imageList} />}
       />
-      {/* <Route path="/detail/:id" element={<DetailImageLayout />} /> */}
+      <Route path="/detail/:id" element={<DetailImageLayout />} />
 
-      {/* <Route path="/profile" element={<ProfileLayout />} /> */}
+      <Route path="/profile" element={<ProfileLayout />} />
       {/* </Route> */}
 
       <Route path="/" index element={<HomeInNotLogin />} />

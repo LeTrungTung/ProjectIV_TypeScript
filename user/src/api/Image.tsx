@@ -45,7 +45,7 @@ export class ImageAPI {
     const url = `/api/v1/image/get-image-user-save/${id}`;
     return axiosClient.get(url);
   }
-  static getOperationImage(id: number) {
+  static getOperationImage() {
     const url = `/api/v1/image/get-operation-image`;
     return axiosClient.get(url);
   }

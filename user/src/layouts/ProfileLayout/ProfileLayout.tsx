@@ -3,7 +3,7 @@ import HeaderOnLogin from "../../components/Header/HeaderOnLogin";
 import Profile from "../../components/profile/Profile";
 import "./ProfileLayout.css";
 
-const ProfileLayout = () => {
+const ProfileLayout: React.FC = () => {
   return (
     <div className="wrap-profile">
       <div>

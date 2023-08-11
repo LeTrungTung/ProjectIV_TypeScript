@@ -1,12 +1,3 @@
-// import { combineReducers } from "redux";
-// import userSlice from "./userSlice";
-
-// const rootReducer = combineReducers({
-//   user: userSlice,
-// });
-
-// export default rootReducer;
-
 import {
   combineReducers,
   AnyAction,
@@ -14,9 +5,11 @@ import {
   Reducer,
 } from "redux";
 import userSlice, { UserState } from "./userSlice"; // Make sure to import the correct UserState type
+import editNameSlice from "./editNameSlice";
 
 interface RootState {
   user: UserState; // Update with the correct type if needed
+  editName: any;
 }
 
 const rootReducer: Reducer<
@@ -24,6 +17,7 @@ const rootReducer: Reducer<
   AnyAction
 > = combineReducers({
   user: userSlice,
+  editName: editNameSlice,
 });
 
 export default rootReducer;

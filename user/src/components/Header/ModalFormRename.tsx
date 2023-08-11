@@ -4,6 +4,8 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import { UserAPI } from "../../api/User";
+import { useDispatch } from "react-redux";
+import { updateName } from "../../store/editNameSlice";
 
 interface ModalFormRenameProps {
   show: boolean;
@@ -18,6 +20,7 @@ const ModalFormRename: React.FC<ModalFormRenameProps> = (props) => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClose = () => props.setShow(false);
   const handleFormSubmit = async (
@@ -33,6 +36,7 @@ const ModalFormRename: React.FC<ModalFormRenameProps> = (props) => {
     console.log("idusserlogin", id);
     try {
       await UserAPI.editUsername(id, newUsername);
+      dispatch(updateName());
     } catch (error) {
       console.error("Error retrieving data: ", error);
     }

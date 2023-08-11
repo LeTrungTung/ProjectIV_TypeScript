@@ -9,19 +9,11 @@ import ModalForm from "./ModalForm";
 import ModalFormRename from "./ModalFormRename";
 import { UserAPI } from "../../api/User";
 import { useNavigate } from "react-router-dom";
+import { IDataUser } from "../../types/type";
+import { useSelector } from "react-redux";
 
 interface HeaderOnLoginProps {
   onSearchImage: (keyword: string) => void;
-}
-interface IDataUser {
-  avatarUser: string;
-  email: string;
-  follow: string | null;
-  idUser: number;
-  password: string;
-  role: number;
-  status: number;
-  username: string;
 }
 
 const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
@@ -35,6 +27,8 @@ const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
   const [newName, setNewName] = useState("");
   const [listUser, setListUser] = useState<Array<IDataUser>>([]);
 
+  // gọi lại state thay đổi tên username
+  const dataUpdateName = useSelector((state: any) => state.editName);
   const userLogin =
     JSON.parse(localStorage.getItem("userLogin")) || [];
 
@@ -54,7 +48,7 @@ const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
 
   useEffect(() => {
     fetchDataUserById(idUser);
-  }, []);
+  }, [dataUpdateName]);
 
   const menuRef = useRef<HTMLDivElement>(null);
 

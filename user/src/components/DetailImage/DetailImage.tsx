@@ -3,33 +3,53 @@ import { Container } from "react-bootstrap";
 import { BsThreeDots } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { BsFillCaretRightSquareFill } from "react-icons/bs";
-import { BsSuitHeart } from "react-icons/bs";
+// import { BsFillCaretRightSquareFill } from "react-icons/bs";
+// import { BsSuitHeart } from "react-icons/bs";
 import { MdOutlineSend } from "react-icons/md";
 import { BiSolidHappyHeartEyes } from "react-icons/bi";
 import { MdTagFaces } from "react-icons/md";
 import { CgHeart } from "react-icons/cg";
 import "./DetailImage.css";
-import { useLocation, useParams } from "react-router-dom";
-import { ClassNames } from "@emotion/react";
+import { useParams } from "react-router-dom";
 import { ImageAPI } from "../../api/Image";
 import { UserAPI } from "../../api/User";
 import { CommentAPI } from "../../api/Comment";
 import { FollowAPI } from "../../api/Follow";
+import { ImageChoice } from "../../types/type";
+import { IDataUser } from "../../types/type";
+import { ISaveImage } from "../../types/type";
+import { ImageComment } from "../../types/type";
+import { IOperationImage } from "../../types/type";
+import { IFollowUser } from "../../types/type";
+import { ILikeLoveComment } from "../../types/type";
+import { IComment } from "../../types/type";
+import { ILikeLoveImage } from "../../types/type";
+import { IFollow } from "../../types/type";
+import { IDataUserById } from "../../types/type";
+import { useSelector } from "react-redux";
 
-const DetailImage = () => {
-  const paramsId = useParams();
+const DetailImage: React.FC = () => {
+  const paramsId = useParams<{ id: string }>();
 
   const numberId = Number(paramsId.id);
-  const [imageList, setImageList] = useState([]);
-  const [imageChoice, setImageChoice] = useState([]);
-  const [userList, setUserList] = useState([]);
-  // const [commentList, setCommentList] = useState([]);
-  const [loveCommentList, setLoveCommentList] = useState([]);
-  const [likeCommentList, setLikeCommentList] = useState([]);
-  const [followUserList, setFollowUserList] = useState([]);
-  const [loveImageList, setLoveImageList] = useState([]);
-  const [likeImageList, setLikeImageList] = useState([]);
+  const [imageList, setImageList] = useState<ImageComment[]>([]);
+  const [imageChoice, setImageChoice] = useState<ImageChoice[]>([]);
+  const [userList, setUserList] = useState<IDataUser[]>([]);
+  const [loveCommentList, setLoveCommentList] = useState<
+    ILikeLoveComment[]
+  >([]);
+  const [likeCommentList, setLikeCommentList] = useState<
+    ILikeLoveComment[]
+  >([]);
+  const [followUserList, setFollowUserList] = useState<IFollowUser[]>(
+    []
+  );
+  const [loveImageList, setLoveImageList] = useState<
+    IOperationImage[]
+  >([]);
+  const [likeImageList, setLikeImageList] = useState<
+    IOperationImage[]
+  >([]);
   const [allCommentList, setAllCommentList] = useState([]);
   const [isCall, setIsCall] = useState(true);
   const [isCallUser, setIsCallUser] = useState(true);
@@ -38,14 +58,24 @@ const DetailImage = () => {
   const [isOperation, setIsOperation] = useState(true);
   const [isChoiceImg, setIsChoiceImg] = useState(true);
   const [isCallImage, setIsCallImage] = useState(true);
-  const [usersCreateImage, setUsersCreateImage] = useState([]);
+  const [usersCreateImage, setUsersCreateImage] = useState<
+    IDataUser[]
+  >([]);
   const [userFollowed, setUserFollowed] = useState([]);
-  const [isCallFollow, setIsCallFollow] = useState(true);
-  const [imageSaved, setImageSaved] = useState([]);
-  const [likeLoveComment, setLikeLoveComment] = useState([]);
-  const [operationImage, setOperationImage] = useState([]);
-  const [userFollowOthers, setUserFollowOthers] = useState([]);
+  // const [isCallFollow, setIsCallFollow] = useState(true);
+  const [imageSaved, setImageSaved] = useState<ISaveImage[]>([]);
+  const [likeLoveComment, setLikeLoveComment] = useState<
+    ILikeLoveComment[]
+  >([]);
+  const [operationImage, setOperationImage] = useState<
+    IOperationImage[]
+  >([]);
+  const [userFollowOthers, setUserFollowOthers] = useState<IFollow[]>(
+    []
+  );
   const [statusFollow, setStatusFollow] = useState(false);
+  const dataUpdateName = useSelector((state: any) => state.editName);
+  console.log(dataUpdateName);
   const userLogin =
     JSON.parse(localStorage.getItem("userLogin")) || [];
 
@@ -73,13 +103,10 @@ const DetailImage = () => {
     imageStoreSaved = true;
   }
 
-  const fetchUserJoinImage = async (id) => {
+  const fetchUserJoinImage = async (id: number) => {
     try {
       const response1 = await ImageAPI.getImageCreatedUser(id);
-      // const response2 = await ImageAPI.getUsersSaveImage(id);
       setUsersCreateImage(response1.data.data);
-
-      // setUsersSaveImage(response2.data.data);
     } catch (error) {
       console.error("Error retrieving data: ", error);
     }
@@ -98,7 +125,7 @@ const DetailImage = () => {
 
   // gọi dữ liệu API lấy image by Id
   useEffect(() => {
-    const fetchImageById = async (id) => {
+    const fetchImageById = async (id: number) => {
       try {
         const response = await ImageAPI.getImageById(id);
         setImageChoice(response.data.data);
@@ -147,15 +174,10 @@ const DetailImage = () => {
     }
   };
   useEffect(() => {
-    if (isCall) {
-      fetchDataImage();
-    }
-    return () => {
-      setIsCall(false);
-    };
-  }, [isCall]);
+    fetchDataImage();
+  }, [dataUpdateName]);
 
-  const fetchUserFollowed = async (id) => {
+  const fetchUserFollowed = async (id: number) => {
     try {
       const response3 = await FollowAPI.getUserFollowed(id);
       // const response1 = await FollowAPI.getUserFolloweOther(id);
@@ -168,12 +190,7 @@ const DetailImage = () => {
     }
   };
   useEffect(() => {
-    // if (isCallFollow) {
     fetchUserFollowed(idUserCreate);
-    // }
-    // return () => {
-    //   setIsCallFollow(false);
-    // };
   }, [idUserCreate]);
   console.log("setUserFollowed", userFollowed);
   console.log("usersCreateImage", usersCreateImage[0]?.idUser);
@@ -272,7 +289,7 @@ const DetailImage = () => {
   console.log("findUserCreateImagend", findUserCreateImage?.idUser);
   // đếm số lượt được follow của user này
   const countFollowUser = followUserList.filter(
-    (item) => item.idUser === findUserCreateImage.idUser
+    (item) => item.idUser === findUserCreateImage?.idUser
   ).length;
   console.log("countFollowUser", countFollowUser);
 
@@ -301,7 +318,9 @@ const DetailImage = () => {
   console.log("Dem love của từng comment", loveByCommentList);
   console.log("all comment===>", allCommentList);
 
-  const handleCommentChange = (e) => {
+  const handleCommentChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setComment(e.target.value);
   };
 
@@ -320,8 +339,6 @@ const DetailImage = () => {
           // update lại dữ liệu từ DB
           // ------------------------------------?
           fetchDataImage();
-          // setIsCall(!isCall);
-          // dispatch(handleCallCommentAPI()).unwrap();
           setComment("");
         })
         .catch((error) => {
@@ -338,7 +355,7 @@ const DetailImage = () => {
   console.log("countComments", countComments.length);
   // đếm số lượng tim yêu thích của từng comment
 
-  const handleHeartClick = async (id) => {
+  const handleHeartClick = async (id: number) => {
     const commentHeart = imageList?.find(
       (imageJoinComment) => imageJoinComment.idComment === id
     );
@@ -354,9 +371,7 @@ const DetailImage = () => {
         console.error("Error retrieving data: ", error);
       }
     };
-    // useEffect(() => {
-    //   fetchLikeLoveComment();
-    // }, []);
+
     fetchLikeLoveComment();
     console.log(66666, likeLoveComment);
     const findComment = likeLoveComment?.filter(
@@ -367,7 +382,7 @@ const DetailImage = () => {
     console.log(777, findComment);
     if (findComment?.length > 0) {
       // console.log(888, "đã thả tim rồi thì xoá tim đi");
-      const handleDeleteLikeAtComment = async (id) => {
+      const handleDeleteLikeAtComment = async (id: number) => {
         try {
           await CommentAPI.deleteLikeAtComment(id);
           // Xoá thành công, tiến hành tải lại danh sách blog
@@ -429,7 +444,7 @@ const DetailImage = () => {
       const findIdSaveImage = findArrSaveImage?.idSaveImage;
       console.log(555555555555, findIdSaveImage);
       // Xoá ảnh trong images_saved_user tại dòng có idSaveImage=findIdSaveImage
-      const handleDeleteImage = async (id) => {
+      const handleDeleteImage = async (id: number) => {
         try {
           await ImageAPI.deleteImageById(id);
           // Xoá thành công, tiến hành tải lại danh sách blog
@@ -437,24 +452,22 @@ const DetailImage = () => {
           console.error("Error deleting blog: ", error);
         }
       };
-      handleDeleteImage(findIdSaveImage);
+      if (typeof findIdSaveImage === "number") {
+        handleDeleteImage(findIdSaveImage);
+      }
       fetchImageSaved();
     }
 
     // nếu ảnh chưa lưu thì add ảnh vào API, ngược lại thì không
     if (!isSaved) {
-      // const data = await dispatch(
-      //   handleCallDocumentAPI(newDocumment)
-      // ).unwrap();
-      // if (data) {
-      //   console.log("tao thanh cong");
-      // }
     }
   };
 
   // Xử lý biểu tượng cảm xúc hình ảnh
   const [showIcons, setShowIcons] = useState(false);
-  const [chooseIcon, setChooseIcon] = useState("");
+  const [chooseIcon, setChooseIcon] = useState<JSX.Element | null>(
+    null
+  );
   const handleMouseOver = () => {
     setShowIcons(true);
   };
@@ -478,7 +491,7 @@ const DetailImage = () => {
     fetchOperationImage();
   }, []);
 
-  const handleIconClick = async (icon) => {
+  const handleIconClick = async (icon: string) => {
     // Xử lý khi người dùng chọn biểu tượng
     console.log("operationImage:", operationImage);
     let findArrLoveImage = operationImage?.filter(
@@ -497,16 +510,19 @@ const DetailImage = () => {
       setChooseIcon(<BiSolidHappyHeartEyes />);
       if (findArrLoveImage?.length > 0) {
         // xoá love Image
-        const DeleteLoveImage = async (id) => {
+        const DeleteLoveImage = async (id: number) => {
           try {
-            const response = await ImageAPI.deleteLoveImage(id);
-            // fetchOperationImage();
+            await ImageAPI.deleteLoveImage(id);
             fetchLoveImage();
           } catch (error) {
             console.error("Error retrieving data: ", error);
           }
         };
-        DeleteLoveImage(findArrLoveImage[0]?.idOperationImage);
+        if (
+          typeof findArrLoveImage[0]?.idOperationImage === "number"
+        ) {
+          DeleteLoveImage(findArrLoveImage[0]?.idOperationImage);
+        }
         fetchOperationImage();
       }
       //  nếu chưa có thì add love image vào
@@ -517,8 +533,9 @@ const DetailImage = () => {
           userLoveImageId: userLogin?.idUser,
           userSavedImageId: null,
         };
-        // console.log(1010, newLikeComment);
-        const handlePostLoveImage = async (newLoveImage) => {
+        const handlePostLoveImage = async (
+          newLoveImage: ILikeLoveImage
+        ) => {
           try {
             const response2 = await ImageAPI.postLoveImage(
               newLoveImage
@@ -538,15 +555,19 @@ const DetailImage = () => {
 
       if (findArrLikeImage?.length > 0) {
         // xoá like Image
-        const DeleteLikeImage = async (id) => {
+        const DeleteLikeImage = async (id: number) => {
           try {
-            const response = await ImageAPI.deleteLoveImage(id);
+            await ImageAPI.deleteLoveImage(id);
             fetchLoveImage();
           } catch (error) {
             console.error("Error retrieving data: ", error);
           }
         };
-        DeleteLikeImage(findArrLikeImage[0]?.idOperationImage);
+        if (
+          typeof findArrLikeImage[0]?.idOperationImage === "number"
+        ) {
+          DeleteLikeImage(findArrLikeImage[0]?.idOperationImage);
+        }
         fetchOperationImage();
       }
       //  nếu chưa có thì add love image vào
@@ -557,7 +578,9 @@ const DetailImage = () => {
           userLoveImageId: null,
           userSavedImageId: null,
         };
-        const handlePostLikeImage = async (newLikeImage) => {
+        const handlePostLikeImage = async (
+          newLikeImage: ILikeLoveImage
+        ) => {
           try {
             const response2 = await ImageAPI.postLoveImage(
               newLikeImage
@@ -576,10 +599,10 @@ const DetailImage = () => {
 
   const [showRenderUserOperation, setShowRenderUserOperation] =
     useState(false);
-  const renderUserOperationRef = useRef(null);
+  const renderUserOperationRef = useRef<any>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         renderUserOperationRef.current &&
         !renderUserOperationRef.current.contains(event.target)
@@ -599,7 +622,7 @@ const DetailImage = () => {
     setShowRenderUserOperation(true);
   };
 
-  const fetchUserFollowOther = async (id) => {
+  const fetchUserFollowOther = async (id: number) => {
     try {
       const response = await FollowAPI.getUserFolloweOther(id);
       setUserFollowOthers(response.data.data);
@@ -612,13 +635,9 @@ const DetailImage = () => {
     fetchUserFollowOther(userLogin?.idUser);
   }, []);
 
-  const ListFollowedbyUserLogin = userFollowOthers.filter(
+  userFollowOthers.filter(
     (item) => item.userFollowedbyId === usersCreateImage[0]?.idUser
   );
-  // console.log("222222", ListFollowedbyUserLogin);
-  // if (ListFollowedbyUserLogin.length > 0) {
-  //   setStatusFollow(true);
-  // }
 
   const handleFollowUserCreatedImg = () => {
     const ListFollowedbyUserLogin = userFollowOthers.filter(
@@ -627,14 +646,16 @@ const DetailImage = () => {
     console.log("222222", ListFollowedbyUserLogin);
     if (ListFollowedbyUserLogin.length > 0) {
       // Bỏ theo dõi
-      const deleteFollowed = async (id) => {
+      const deleteFollowed = async (id: number) => {
         try {
-          const response = await FollowAPI.deleteFollowed(id);
+          await FollowAPI.deleteFollowed(id);
         } catch (error) {
           console.error("Error retrieving data: ", error);
         }
       };
-      deleteFollowed(ListFollowedbyUserLogin[0].idFollow);
+      if (typeof ListFollowedbyUserLogin[0].idFollow === "number") {
+        deleteFollowed(ListFollowedbyUserLogin[0].idFollow);
+      }
       fetchUserFollowOther(userLogin?.idUser);
       setStatusFollow(!statusFollow);
     }
@@ -644,9 +665,9 @@ const DetailImage = () => {
         userFollowedbyId: usersCreateImage[0]?.idUser,
         userFollowOtherId: Number(userLogin?.idUser),
       };
-      const handleAddFolowed = async (newFollow) => {
+      const handleAddFolowed = async (newFollow: IFollow) => {
         try {
-          const response = await FollowAPI.addFollowed(newFollow);
+          await FollowAPI.addFollowed(newFollow);
         } catch (error) {
           console.error("Error retrieving data: ", error);
         }
@@ -792,7 +813,7 @@ const DetailImage = () => {
                                     return (
                                       <div
                                         className="row-mini-love"
-                                        key={userlove}
+                                        key={userlove.idComment}
                                       >
                                         <div>
                                           <span>

@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
-import { useLocation } from "react-router-dom";
 import { ImageAPI } from "../../api/Image";
 import { FollowAPI } from "../../api/Follow";
 import { UserAPI } from "../../api/User";
+import { IDataUserById } from "../../types/type";
 
-const Profile = () => {
-  const [usersCreateImage, setUsersCreateImage] = useState();
-  const [usersSaveImage, setUsersSaveImage] = useState();
-  const [userFollowed, setUserFollowed] = useState();
-  const [userFollowOther, setUserFollowOther] = useState();
-  const [listUser, setListUser] = useState([]);
+const Profile: React.FC = () => {
+  const [usersCreateImage, setUsersCreateImage] = useState<
+    Array<any>
+  >([]);
+  const [usersSaveImage, setUsersSaveImage] = useState<Array<any>>(
+    []
+  );
+  const [userFollowed, setUserFollowed] = useState<Array<any>>([]);
+  const [userFollowOther, setUserFollowOther] = useState<Array<any>>(
+    []
+  );
+  const [listUser, setListUser] = useState<Array<IDataUserById>>([]);
 
   const userLogin =
     JSON.parse(localStorage.getItem("userLogin")) || [];
@@ -18,23 +24,23 @@ const Profile = () => {
   const [isCallImage, setIsCallImage] = useState(true);
   const [isCallFollow, setIsCallFollow] = useState(true);
   const idUser = userLogin?.idUser;
-  const fetchDataUserById = async (id) => {
-    try {
-      const response = await UserAPI.getUserById(id);
-      console.log("get user successfully:", response.data.data);
-      setListUser(response.data.data);
-    } catch (error) {
-      console.error("Error get User:", error);
-    }
-  };
+
   useEffect(() => {
+    const fetchDataUserById = async (id: number) => {
+      try {
+        const response = await UserAPI.getUserById(id);
+        console.log("get user successfully:", response.data.data);
+        setListUser(response.data.data);
+      } catch (error) {
+        console.error("Error get User:", error);
+      }
+    };
     fetchDataUserById(idUser);
   }, []);
   console.log("ktra list user", listUser);
 
-  // gọi dữ liệu API user join image
   useEffect(() => {
-    const fetchUserJoinImage = async (id) => {
+    const fetchUserJoinImage = async (id: number) => {
       try {
         const response1 = await ImageAPI.getUsersCreateImage(id);
         const response2 = await ImageAPI.getUsersSaveImage(id);
@@ -46,14 +52,12 @@ const Profile = () => {
     };
     if (isCallImage) {
       fetchUserJoinImage(idUser);
-    }
-    return () => {
       setIsCallImage(false);
-    };
+    }
   }, [isCallImage]);
 
   useEffect(() => {
-    const fetchUserFollowed = async (id) => {
+    const fetchUserFollowed = async (id: number) => {
       try {
         const response = await FollowAPI.getUserFollowed(id);
         const response1 = await FollowAPI.getUserFolloweOther(id);
@@ -65,17 +69,13 @@ const Profile = () => {
     };
     if (isCallFollow) {
       fetchUserFollowed(idUser);
-    }
-    return () => {
       setIsCallFollow(false);
-    };
+    }
   }, [isCallFollow]);
-  //   console.log("object33", userFollowOther);
 
-  // const location = useLocation();
   const [isCreatedActive, setIsCreatedActive] = useState(false);
 
-  const handleChoice = (value) => {
+  const handleChoice = (value: string) => {
     if (value === "Tạo") {
       setIsCreatedActive(true);
     }
@@ -131,7 +131,7 @@ const Profile = () => {
       {isCreatedActive && (
         <div className="render-img-create">
           {usersCreateImage?.map((item) => (
-            <div key={item} className="img-post">
+            <div key={item.idUser} className="img-post">
               <img
                 src={item.linkImage}
                 alt="imagecreate"
@@ -145,7 +145,7 @@ const Profile = () => {
       {!isCreatedActive && (
         <div className="render-img-save">
           {usersSaveImage?.map((item) => (
-            <div key={item} className="img-saved">
+            <div key={item.idUser} className="img-saved">
               <img
                 src={item.linkImage}
                 alt="imagesaved"

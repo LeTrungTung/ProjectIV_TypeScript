@@ -13,7 +13,7 @@ export class CommentAPI {
     const url = "api/v1/comment/get-all-comment";
     return axiosClient.get(url);
   }
-  static postComment(params) {
+  static postComment(params: any) {
     const url = `api/v1/comment/add-comment`;
     return axiosClient.post(url, params);
   }
@@ -21,11 +21,11 @@ export class CommentAPI {
     const url = `api/v1/comment/get-like-love-comment`;
     return axiosClient.get(url);
   }
-  static deleteLikeAtComment(id) {
+  static deleteLikeAtComment(id: number) {
     const url = `api/v1/comment/delete-like-comment/${id}`;
     return axiosClient.delete(url);
   }
-  static postLikeAtComment(params) {
+  static postLikeAtComment(params: any) {
     const url = `api/v1/comment/add-like-comment`;
     return axiosClient.post(url, params);
   }

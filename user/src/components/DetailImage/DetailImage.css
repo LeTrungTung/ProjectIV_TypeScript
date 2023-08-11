@@ -403,7 +403,7 @@
 }
 .show-user-love {
   position: absolute;
-  top: 30px; /* Vị trí hiển thị phía trên */
+  top: 20px; /* Vị trí hiển thị phía trên */
   left: -90px;
   background-color: #fff;
   border: 1px solid #ccc;
