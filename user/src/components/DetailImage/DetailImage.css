@@ -171,6 +171,7 @@
 }
 #sp-username {
   font-weight: 700;
+  cursor: pointer;
 }
 #userCreate-follow-left {
   display: flex;

@@ -10,7 +10,7 @@ import { BiSolidHappyHeartEyes } from "react-icons/bi";
 import { MdTagFaces } from "react-icons/md";
 import { CgHeart } from "react-icons/cg";
 import "./DetailImage.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ImageAPI } from "../../api/Image";
 import { UserAPI } from "../../api/User";
 import { CommentAPI } from "../../api/Comment";
@@ -78,6 +78,7 @@ const DetailImage: React.FC = () => {
   console.log(dataUpdateName);
   const userLogin =
     JSON.parse(localStorage.getItem("userLogin")) || [];
+  const navigate = useNavigate();
 
   // let idUserCreate = "";
   let imageStoreSaved = false;
@@ -307,6 +308,7 @@ const DetailImage: React.FC = () => {
         (love) => love.idComment == comment.idComment
       ).length
   );
+  console.log(loveByCommentList);
   // tạo ra mảng gồm danh sách các user thích comment đang tương tác
   const arrUserloveComment = commentList?.map((comment) =>
     loveCommentList?.filter(
@@ -394,6 +396,7 @@ const DetailImage: React.FC = () => {
       console.log(99, idDeleteLike);
       handleDeleteLikeAtComment(idDeleteLike);
       fetchDataComment();
+      fetchDataImage();
     } else {
       // console.log(888, "chưa thả tim thì add tim vào");
 
@@ -410,6 +413,7 @@ const DetailImage: React.FC = () => {
             response.data
           );
           fetchDataComment();
+          fetchDataImage();
         })
         .catch((error) => {
           // Xử lý khi gửi bình luận gặp lỗi
@@ -639,11 +643,11 @@ const DetailImage: React.FC = () => {
     (item) => item.userFollowedbyId === usersCreateImage[0]?.idUser
   );
 
+  const ListFollowedbyUserLogin = userFollowOthers.filter(
+    (item) => item.userFollowedbyId === usersCreateImage[0]?.idUser
+  );
+  console.log("222222", ListFollowedbyUserLogin);
   const handleFollowUserCreatedImg = () => {
-    const ListFollowedbyUserLogin = userFollowOthers.filter(
-      (item) => item.userFollowedbyId === usersCreateImage[0]?.idUser
-    );
-    console.log("222222", ListFollowedbyUserLogin);
     if (ListFollowedbyUserLogin.length > 0) {
       // Bỏ theo dõi
       const deleteFollowed = async (id: number) => {
@@ -657,6 +661,7 @@ const DetailImage: React.FC = () => {
         deleteFollowed(ListFollowedbyUserLogin[0].idFollow);
       }
       fetchUserFollowOther(userLogin?.idUser);
+      fetchUserFollowed(idUserCreate);
       setStatusFollow(!statusFollow);
     }
     // add theo theo dõi vào bảng follows
@@ -674,8 +679,13 @@ const DetailImage: React.FC = () => {
       };
       handleAddFolowed(newFollow);
       fetchUserFollowOther(userLogin?.idUser);
+      fetchUserFollowed(idUserCreate);
       setStatusFollow(!statusFollow);
     }
+  };
+
+  const handleDetailUserCreateImage = () => {
+    navigate(`/profile/${idUserCreate}`);
   };
 
   return (
@@ -715,7 +725,10 @@ const DetailImage: React.FC = () => {
                 <img src={usersCreateImage[0]?.avatarUser} alt="" />
               </div>
               <div id="username-count-follow">
-                <span id="sp-username">
+                <span
+                  id="sp-username"
+                  onClick={handleDetailUserCreateImage}
+                >
                   {usersCreateImage[0]?.username}
                 </span>
                 <span>{userFollowed?.length} người theo dõi</span>
@@ -725,9 +738,13 @@ const DetailImage: React.FC = () => {
               <button
                 id="btn-follow"
                 onClick={handleFollowUserCreatedImg}
-                className={statusFollow ? "" : "saved"}
+                className={
+                  ListFollowedbyUserLogin.length > 0 ? "saved" : ""
+                }
               >
-                {statusFollow !== true ? "Đã theo dõi" : "Theo dõi"}
+                {ListFollowedbyUserLogin.length > 0
+                  ? "Đã theo dõi"
+                  : "Theo dõi"}
               </button>
             </div>
           </div>

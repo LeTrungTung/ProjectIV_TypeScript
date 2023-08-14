@@ -52,7 +52,7 @@ const Router: React.FC = () => {
       />
       <Route path="/detail/:id" element={<DetailImageLayout />} />
 
-      <Route path="/profile" element={<ProfileLayout />} />
+      <Route path="/profile/:idUser" element={<ProfileLayout />} />
       {/* </Route> */}
 
       <Route path="/" index element={<HomeInNotLogin />} />

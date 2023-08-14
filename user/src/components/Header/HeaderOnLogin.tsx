@@ -13,11 +13,13 @@ import { IDataUser } from "../../types/type";
 import { useSelector } from "react-redux";
 
 interface HeaderOnLoginProps {
-  onSearchImage: (keyword: string) => void;
+  onSearchImage?: (keyword: string) => void;
+  // onValueIdUser?: (id: number) => void;
 }
 
 const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
   onSearchImage,
+  // onValueIdUser,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalRename, setShowModalRename] = useState(false);
@@ -95,6 +97,9 @@ const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
   const handleRenameUser = () => {
     setShowModalRename(true);
   };
+  const handleToProfile = () => {
+    navigate(`/profile/${idUser}`);
+  };
 
   return (
     <Container fluid id="header1">
@@ -157,12 +162,7 @@ const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
               <span>Tin nhắn</span>
             </div>
           </div>
-          <div
-            className="wrap-avata-hover"
-            onClick={() => {
-              navigate("/profile");
-            }}
-          >
+          <div className="wrap-avata-hover" onClick={handleToProfile}>
             {listUser[0]?.avatarUser == null ? (
               <img
                 src="https://cdn.onlinewebfonts.com/svg/img_542942.png"
