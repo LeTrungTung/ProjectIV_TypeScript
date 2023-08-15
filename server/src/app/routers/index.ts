@@ -5,7 +5,7 @@
 // }
 
 import { Express } from "express";
-// import userRouter from "./user.route";
+import userRouter from "./user.route";
 import imageRouter from "./image.route";
 import commentRouter from "./comment.route";
 import followRouter from "./follow_user.route";
@@ -14,7 +14,7 @@ import uploadOne from "./upload_one.route";
 import uploadImageRoute from "./uploadImage.route";
 
 function Routes(app: Express) {
-  // app.use("/api/v1/user", userRouter);
+  app.use("/api/v1/user", userRouter);
   app.use("/api/v1/image", imageRouter);
   app.use("/api/v1/comment", commentRouter);
   app.use("/api/v1/follow", followRouter);

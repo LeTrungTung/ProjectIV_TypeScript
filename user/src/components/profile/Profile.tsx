@@ -233,7 +233,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
             ref={renderUserFollowOtherRef}
             className="render-user-followed"
           >
-            <h2>{usersFollowed.length} Người theo dõi</h2>
+            <h2>{usersFollowed.length} Người đang theo dõi</h2>
             <div className="row-render-userfollowed">
               {userFollowOther?.map((user, index) => {
                 return (

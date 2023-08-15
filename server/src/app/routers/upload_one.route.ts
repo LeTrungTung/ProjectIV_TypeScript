@@ -62,7 +62,7 @@ router.post(
   upload.single("uploadImage"),
   (req: Request, res: Response) => {
     const url = req.protocol + "://" + req.get("host");
-    const image = url + "/public/" + req.file?.filename;
+    const image = url + "/images/" + req.file?.filename;
 
     connectionMySQL.query(
       "INSERT INTO uploadOne (nameImage) VALUES (?)",

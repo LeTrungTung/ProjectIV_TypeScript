@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import Router from "./routers";
 import path from "path";
+import cors from "cors";
 
 const app: Express = express();
 
@@ -10,6 +11,7 @@ const app: Express = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(cors());
 
 //static file
 const staticDirectory = path.join(__dirname, "../../public");

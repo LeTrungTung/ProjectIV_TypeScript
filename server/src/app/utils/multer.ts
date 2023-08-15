@@ -2,22 +2,28 @@
 import { Request } from "express";
 import multer, { FileFilterCallback } from "multer";
 import uuidv4 from "uuid/v4";
-type DestinationCallback = (error: Error | null, destination: string) => void;
-type FileNameCallback = (error: Error | null, filename: string) => void;
+type DestinationCallback = (
+  error: Error | null,
+  destination: string
+) => void;
+type FileNameCallback = (
+  error: Error | null,
+  filename: string
+) => void;
 
 //init storage
 export const fileStorage = multer.diskStorage({
   //sét úp nơi để lưu trữ
   destination: (
-    req: Request,
-    file: Express.Multer.File,
+    _req: Request,
+    _file: Express.Multer.File,
     cb: DestinationCallback
   ): void => {
     cb(null, "./public/images");
   },
   //tạo đường dẫn ảnh ngẫu nhiên
   filename: (
-    req: Request,
+    _req: Request,
     file: Express.Multer.File,
     cb: FileNameCallback
   ): void => {
@@ -31,7 +37,7 @@ export const fileStorage = multer.diskStorage({
 
 // set up việc lọc hình ảnh
 export const fileFilter = (
-  req: Request,
+  _req: Request,
   file: Express.Multer.File,
   cb: FileFilterCallback
 ) => {

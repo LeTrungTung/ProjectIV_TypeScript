@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { ImageAPI } from "../../api/Image";
 import axiosClient from "../../api/axiosClient";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 interface ModalFormProps {
   show: boolean;
@@ -25,8 +25,6 @@ const ModalForm: React.FC<ModalFormProps> = (props) => {
     linkImage: "",
   });
 
-  const navigate = useNavigate();
-
   // gọi dữ liệu bảng images
   const fetchAllImages = async () => {
     try {
@@ -41,8 +39,8 @@ const ModalForm: React.FC<ModalFormProps> = (props) => {
     fetchAllImages();
   }, []);
 
-  const idNewImage =
-    Number(allImages[allImages.length - 1]?.idImage) + 1;
+  // const idNewImage =
+  //   Number(allImages[allImages.length - 1]?.idImage) + 1;
 
   const handleClose = () => props.setShow(false);
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -119,6 +117,72 @@ const ModalForm: React.FC<ModalFormProps> = (props) => {
         <Modal.Body>
           <Form onSubmit={handleFormSubmit} id="id-form">
             {/* ... (Form Group components) ... */}
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlInput1"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Thể loại ảnh"
+                autoFocus
+                name="categoryImage"
+                onChange={handleInputChange}
+                value={dataForm?.categoryImage}
+              />
+            </Form.Group>
+
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlInput1"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Nhập tiêu đề ảnh"
+                autoFocus
+                name="titleImage"
+                onChange={handleInputChange}
+                value={dataForm?.titleImage}
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Control
+                as="textarea"
+                placeholder="Mô tả ảnh"
+                rows={1}
+                name="description"
+                onChange={handleInputChange}
+                value={dataForm?.description}
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Nhập nguồn gốc ảnh"
+                autoFocus
+                name="sourceImage"
+                onChange={handleInputChange}
+                value={dataForm?.sourceImage}
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Control
+                type="file"
+                placeholder="Chọn file ảnh"
+                autoFocus
+                name="linkImage"
+                onChange={handleImageChange}
+              />
+            </Form.Group>
+
             <div className="ctr-form">
               <Button variant="primary" type="submit">
                 Lưu và tạo mới

@@ -4,7 +4,7 @@ import axiosClient from "./axiosClient";
 export class UserAPI {
   // API đăng ký
   static register(param: any): Promise<any> {
-    const url = "http://localhost:4000/api/v1/user/register";
+    const url = "http://localhost:8000/api/v1/user/register";
     return axios.post(url, param);
   }
   //   API đăng nhập

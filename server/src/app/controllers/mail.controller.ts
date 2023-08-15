@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer');
-const mailerConfig = require('../../configs/mail.config');
+import nodemailer from "nodemailer";
+import mailerConfig from "../../configs/mail.config";
 
 // Cấu hình transporter
 const transporter = nodemailer.createTransport({
@@ -11,14 +11,12 @@ const transporter = nodemailer.createTransport({
 });
 
 // Hàm gửi email thông báo cho người dùng
-const sendRegistrationEmail = async (email) => {
-  //   const { fullname, email } = user;
-
+const sendRegistrationEmail = async (email: string) => {
   // Nội dung email
   const mailOptions = {
     from: mailerConfig.email.user,
     to: email,
-    subject: 'Registration Successful',
+    subject: "Registration Successful",
     html: `
       <html>
         <head>
@@ -28,7 +26,7 @@ const sendRegistrationEmail = async (email) => {
               font-family: Arial, sans-serif;
               background-color: #f0f0f0;
             }
-            h1 {
+            h2 {
               color: #333333;
             }
             p {
@@ -37,8 +35,8 @@ const sendRegistrationEmail = async (email) => {
           </style>
         </head>
         <body>
-          <h1>Chúc mừng ${email} đã đăng ký thành công!</h1>
-          <p>Hãy khám phá chúng tôi và trải nghiệm những sản phẩm tuyệt vời của chúng tôi.</p>
+          <h2>Chúc mừng ${email} đã đăng ký thành công!</h2>
+          <p>Hãy khám phá và có những trải nghiệm tuyệt vời.</p>
         </body>
       </html>
     `,
@@ -48,4 +46,4 @@ const sendRegistrationEmail = async (email) => {
   await transporter.sendMail(mailOptions);
 };
 
-module.exports = sendRegistrationEmail;
+export default sendRegistrationEmail;
