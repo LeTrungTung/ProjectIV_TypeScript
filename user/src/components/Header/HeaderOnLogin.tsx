@@ -11,6 +11,7 @@ import { UserAPI } from "../../api/User";
 import { useNavigate } from "react-router-dom";
 import { IDataUser } from "../../types/type";
 import { useSelector } from "react-redux";
+import ModalFormChangeAvatar from "./ModalFormChangeAvatar";
 
 interface HeaderOnLoginProps {
   onSearchImage?: (keyword: string) => void;
@@ -23,6 +24,8 @@ const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalRename, setShowModalRename] = useState(false);
+  const [showModalChangeAvatar, setShowModalChangeAvatar] =
+    useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchImage, setSearchImage] = useState("");
   const [currentName, setCurrentName] = useState("");
@@ -101,6 +104,10 @@ const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
     navigate(`/profile/${idUser}`);
   };
 
+  const handleChangeAvatar = () => {
+    setShowModalChangeAvatar(true);
+  };
+
   return (
     <Container fluid id="header1">
       {showModal && (
@@ -110,6 +117,12 @@ const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
         <ModalFormRename
           show={showModalRename}
           setShow={setShowModalRename}
+        />
+      )}
+      {showModalChangeAvatar && (
+        <ModalFormChangeAvatar
+          show={showModalChangeAvatar}
+          setShow={setShowModalChangeAvatar}
         />
       )}
 
@@ -220,6 +233,13 @@ const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
                   onClick={handleRenameUser}
                 >
                   Đổi tên tài khoản
+                </span>
+
+                <span
+                  className="profile-logout hoverto"
+                  onClick={handleChangeAvatar}
+                >
+                  Đổi ảnh đại diện
                 </span>
 
                 <span

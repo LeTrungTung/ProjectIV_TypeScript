@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { ImageAPI } from "../../api/Image";
 import axiosClient from "../../api/axiosClient";
+import "./ModalForm.css";
 // import { useNavigate } from "react-router-dom";
 
 interface ModalFormProps {

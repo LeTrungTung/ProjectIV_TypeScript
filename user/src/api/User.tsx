@@ -10,7 +10,7 @@ export class UserAPI {
   //   API đăng nhập
   static login(param: any): Promise<any> {
     const url = "/api/v1/user/login";
-    return axiosClient.post(url, param);
+    return axiosClient.post(url, param, { withCredentials: true });
   }
 
   static getUsers(): Promise<any> {
@@ -19,6 +19,10 @@ export class UserAPI {
   }
   static editUsername(id: number, param: any): Promise<any> {
     const url = `api/v1/user/edit-user/${id}`;
+    return axiosClient.patch(url, param);
+  }
+  static editAvatar(id: number, param: any): Promise<any> {
+    const url = `api/v1/user/edit-avatar/${id}`;
     return axiosClient.patch(url, param);
   }
   static getUserById(id: number): Promise<any> {

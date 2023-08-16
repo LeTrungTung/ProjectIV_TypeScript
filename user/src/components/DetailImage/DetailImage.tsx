@@ -163,7 +163,10 @@ const DetailImage: React.FC = () => {
   }, [isCallUser]);
 
   console.log("userList====>", userList);
-
+  const userOnLogin = userList.find(
+    (item) => item.idUser === userLogin?.idUser
+  );
+  console.log("userOnLogin", userOnLogin);
   // gọi dữ liệu API images
   const fetchDataImage = async () => {
     try {
@@ -768,16 +771,13 @@ const DetailImage: React.FC = () => {
                 return (
                   <div className="show-comment" key={index}>
                     <div className="avatar-comment">
-                      {userLogin?.avatarUser == null ? (
+                      {comment.avatarUser == null ? (
                         <img
                           src="https://cdn.onlinewebfonts.com/svg/img_542942.png"
                           alt="avatar"
                         />
                       ) : (
-                        <img
-                          src={userLogin?.avatarUser}
-                          alt="avatar"
-                        />
+                        <img src={comment.avatarUser} alt="avatar" />
                       )}
 
                       {/* <img src={comment.avatarUser} alt="" /> */}
@@ -975,7 +975,7 @@ const DetailImage: React.FC = () => {
             </div>
           </div>
           <div id="bottom-comment">
-            {userLogin?.avatarUser == null ? (
+            {userOnLogin?.avatarUser == null ? (
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNL_ZnOTpXSvhf1UaK7beHey2BX42U6solRA&usqp=CAU"
                 alt="avatar"
@@ -983,7 +983,7 @@ const DetailImage: React.FC = () => {
               />
             ) : (
               <img
-                src={userLogin?.avatarUser}
+                src={userOnLogin?.avatarUser}
                 alt="avatar"
                 id="avatar-comment"
               />

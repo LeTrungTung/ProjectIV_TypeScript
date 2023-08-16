@@ -7,18 +7,22 @@ import { UserAPI } from "../../api/User";
 import { useDispatch } from "react-redux";
 import { updateName } from "../../store/editNameSlice";
 import "./ModalFormRename.css";
+import axiosClient from "../../api/axiosClient";
 
-interface ModalFormRenameProps {
+interface ModalFormChangeAvatarProps {
   show: boolean;
   setShow: (show: boolean) => void;
 }
 
-const ModalFormRename: React.FC<ModalFormRenameProps> = (props) => {
+const ModalFormChangeAvatar: React.FC<ModalFormChangeAvatarProps> = (
+  props
+) => {
   const userLogin =
     JSON.parse(localStorage.getItem("userLogin")) || [];
-  const [dataForm, setDataForm] = useState<{ username: string }>({
-    username: "",
-  });
+  const [imgServer, setImgServer] = useState<string>("");
+  // const [dataForm, setDataForm] = useState<{ avatarUser: string }>({
+  //   avatarUser: "",
+  // });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,15 +32,15 @@ const ModalFormRename: React.FC<ModalFormRenameProps> = (props) => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    const dataFromPost = dataForm;
+    // const dataFromPost = dataForm;
 
-    const newUsername = {
-      username: dataFromPost.username,
+    const newAvatar = {
+      avatarUser: imgServer,
     };
     const id = userLogin?.idUser;
     console.log("idusserlogin", id);
     try {
-      await UserAPI.editUsername(id, newUsername);
+      await UserAPI.editAvatar(id, newAvatar);
       dispatch(updateName());
     } catch (error) {
       console.error("Error retrieving data: ", error);
@@ -44,23 +48,44 @@ const ModalFormRename: React.FC<ModalFormRenameProps> = (props) => {
     props.setShow(false);
   };
 
-  const handleInputChange = (
+  // const handleInputChange = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   const { name, value } = event.target;
+  //   setDataForm((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
+
+  const handleImageChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const { name, value } = event.target;
-    setDataForm((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    axiosClient({
+      method: "POST",
+      url: "/api/v1/upload-one",
+      data: { uploadImage: file },
+      headers: {
+        "Content-Type": "multipart/form-data; ",
+      },
+    })
+      .then((data) => {
+        console.log("Avatar đại diện", data);
+        setImgServer(data.data.image);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <>
       <Modal show={props.show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title id="modal-title">
-            Đổi tên người dùng
-          </Modal.Title>
+          <Modal.Title id="modal-title">Đổi ảnh đại diện</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleFormSubmit} id="id-form">
@@ -69,17 +94,16 @@ const ModalFormRename: React.FC<ModalFormRenameProps> = (props) => {
               controlId="exampleForm.ControlInput1"
             >
               <Form.Control
-                type="text"
-                placeholder="Nhập tên người dùng thay đổi"
+                type="file"
+                placeholder="Chọn file ảnh thay đổi"
                 autoFocus
-                name="username"
-                onChange={handleInputChange}
-                value={dataForm.username}
+                name="linkImage"
+                onChange={handleImageChange}
               />
             </Form.Group>
             <div className="ctr-form1">
               <Button variant="primary" type="submit">
-                Lưu tên mới
+                Lưu Avatar mới
               </Button>
               <Button
                 className="btn-close-modal"
@@ -96,4 +120,4 @@ const ModalFormRename: React.FC<ModalFormRenameProps> = (props) => {
   );
 };
 
-export default ModalFormRename;
+export default ModalFormChangeAvatar;

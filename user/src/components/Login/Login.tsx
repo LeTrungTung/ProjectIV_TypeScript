@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import "./Login.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -9,14 +9,17 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate(); // Sử dụng hook useNavigate
   const dipatch = useDispatch();
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     // Kiểm tra dữ liệu và xử lý đăng ký
-    const errors = {};
+    const errors = { email: "", password: "" };
 
     if (email.trim() === "") {
       errors.email = "Vui lòng nhập email!";
@@ -49,7 +52,7 @@ const Login = () => {
     setErrors(errors);
   };
 
-  const isValidEmail = (value) => {
+  const isValidEmail = (value: string) => {
     // Kiểm tra định dạng email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(value);

@@ -2,7 +2,9 @@
   margin-left: 0 !important;
 }
 .ctr-form {
-  text-align: center;
+  display: flex !important;
+  justify-content: space-around !important;
+  margin: 0 30px !important;
 }
 #modal-title {
   margin-left: 130px !important;

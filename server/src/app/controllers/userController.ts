@@ -1,10 +1,14 @@
 import jwt from "jsonwebtoken";
-import { sceretKey } from "../../configs/jwt.config";
+import {
+  sceretKey,
+  sceretKeyRefresh,
+} from "../../configs/jwt.config";
 import bcrypt from "bcryptjs";
 import connectionMySQL from "../../libs/database/db";
 import sendRegistrationEmail from "./mail.controller";
 import { Request, Response } from "express";
 
+let refreshTokenArr: any[] = [];
 class UserController {
   handleRegister(req: Request, res: Response) {
     // get username and password from the body
@@ -68,15 +72,9 @@ class UserController {
                   return sendRegistrationEmail(email);
                 }
               );
-              // return res
-              //   .status(200)
-              //   .json({ msg: "Default response" });
             }
           );
-          // return res.status(200).json({ msg: "Default response" });
         });
-        // Return a default response
-        // return res.status(200).json({ msg: "Default response" });
       }
     );
   }
@@ -110,7 +108,24 @@ class UserController {
 
             // If password matches, generate access token
             if (isPasswordMatch) {
-              const accessToken = jwt.sign(user, sceretKey);
+              const accessToken = jwt.sign(user, sceretKey, {
+                expiresIn: "30s",
+              }); // Token hết hạn trong vòng 30s , vd thêm : 30d ,30m
+              const refreshToken: string = jwt.sign(
+                user,
+                sceretKeyRefresh,
+                { expiresIn: "365d" }
+              ); // Tạo refreshToken để dự trữ
+
+              refreshTokenArr.push(refreshToken); // push refresh token vào 1 mảng để lưu trữ
+              const { password, ...data } = user; //loại bỏ password ra khỏi phần data trả về frontend,destructuring
+              res.cookie("refreshToken", refreshToken, {
+                //Lưu refreshToken vào cookie khi đăng nhập thành công
+                httpOnly: true,
+                secure: true,
+                sameSite: "none",
+              });
+
               return res.status(200).json({
                 data: user,
                 accessToken,
@@ -128,6 +143,53 @@ class UserController {
         return res.status(404).json({ msg: "User not found" });
       }
     );
+  }
+
+  async refreshToken(req: Request, res: Response): Promise<any> {
+    const refreshToken: any = req.cookies.refreshToken; // Lưu ý nhớ cài đặt cookie-parser
+    if (!refreshToken) return res.status(401).json("Unauthenticated");
+    if (!refreshTokenArr.includes(refreshToken)) {
+      return res.status(401).json("Unauthenticated");
+    }
+    jwt.verify(
+      refreshToken,
+      sceretKeyRefresh,
+      (err: any, user: any) => {
+        if (err) {
+          return res.status(400).json("refreshToken is not valid");
+        }
+        const { iat, exp, ...userOther } = user;
+        console.log(user);
+        refreshTokenArr = refreshTokenArr.filter(
+          (token) => token !== refreshToken
+        ); // Lọc ra những thằng cũ
+        // Nếu đúng thì nó sẽ tạo accessToken mới và cả refreshToken mới
+        const newAccessToken = jwt.sign(userOther, sceretKey, {
+          expiresIn: "30s",
+        });
+        const newRefreshToken = jwt.sign(
+          userOther,
+          sceretKeyRefresh,
+          { expiresIn: "365d" }
+        );
+        refreshTokenArr.push(newRefreshToken);
+        res.cookie("refreshToken", newRefreshToken, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+        });
+        res.status(200).json({ accessToken: newAccessToken });
+        return;
+      }
+    );
+  }
+
+  async logout(req: Request, res: Response) {
+    res.clearCookie("refreshToken");
+    refreshTokenArr = refreshTokenArr.filter(
+      (token) => token !== req.cookies.refreshToken
+    );
+    res.status(200).json("Logout successfully");
   }
 
   async handleGetUser(_req: Request, res: Response): Promise<any> {
@@ -200,6 +262,24 @@ class UserController {
           return;
         }
         return res.status(200).json({ msg: "Sửa status thành công" });
+      }
+    );
+  }
+
+  async handleEditAvatar(req: Request, res: Response) {
+    const avatarUser = req.body.avatarUser;
+    let query = `UPDATE users SET avatarUser=? WHERE idUser=${req.params.id}`;
+
+    connectionMySQL.query(
+      query,
+      [avatarUser],
+      (err: any, _result: any) => {
+        if (err) {
+          console.log(err);
+          res.status(500).json({ msg: err });
+          return;
+        }
+        return res.status(200).json({ msg: "Sửa Avatar thành công" });
       }
     );
   }

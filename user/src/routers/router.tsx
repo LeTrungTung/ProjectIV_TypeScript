@@ -9,6 +9,7 @@ import { ImageAPI } from "../api/Image";
 import DefaultLayout from "../layouts/DefaultLayout/DefaultLayout";
 import ProfileLayout from "../layouts/ProfileLayout/ProfileLayout";
 import DetailImageLayout from "../layouts/DetailImageLayout/DetailImageLayout";
+import RequiredAuth from "../components/RequireAuth";
 
 export interface IDataImage {
   categoryImage: string;
@@ -45,15 +46,15 @@ const Router: React.FC = () => {
 
   return (
     <Routes>
-      {/* <Route element={<RequiredAuth />}> */}
-      <Route
-        path="/home"
-        element={<DefaultLayout dataImage={imageList} />}
-      />
-      <Route path="/detail/:id" element={<DetailImageLayout />} />
+      <Route element={<RequiredAuth />}>
+        <Route
+          path="/home"
+          element={<DefaultLayout dataImage={imageList} />}
+        />
+        <Route path="/detail/:id" element={<DetailImageLayout />} />
 
-      <Route path="/profile/:idUser" element={<ProfileLayout />} />
-      {/* </Route> */}
+        <Route path="/profile/:idUser" element={<ProfileLayout />} />
+      </Route>
 
       <Route path="/" index element={<HomeInNotLogin />} />
 

@@ -46,6 +46,7 @@ export interface ImageComment {
   username: string;
   content: string;
   timecreate: string;
+  avatarUser: string | null;
 }
 export interface IOperationImage {
   idOperationImage?: number;

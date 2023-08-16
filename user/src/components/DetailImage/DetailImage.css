@@ -63,6 +63,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit: cover;
 }
 #bottom-comment {
   display: flex;
@@ -78,7 +79,7 @@
   background-color: #e1e1e1;
   border-radius: 40px;
   padding: 12px;
-  width: 100%;
+  width: 80%;
   position: relative;
   outline: 1px solid #ccc;
 }
@@ -388,6 +389,7 @@
   height: 50px;
   border-radius: 50%;
   margin-right: 10px;
+  object-fit: cover;
 }
 .wrap-row {
   display: flex;
@@ -397,6 +399,7 @@
 .cl-nameuser {
   font-weight: 400;
   font-size: 1.1em;
+  margin-left: 10px;
 }
 /* ------------------------ */
 #wrap-love-comment {
@@ -412,7 +415,7 @@
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s ease;
-  width: 130px;
+  width: 160px;
   height: 120px;
   overflow: auto;
   -webkit-overflow-scrolling: touch;

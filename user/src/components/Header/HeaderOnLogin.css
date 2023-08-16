@@ -1,6 +1,7 @@
 .cl-hover {
   width: 60px;
   height: 60px;
+  object-fit: cover;
 }
 .cl-hover:hover {
   background-color: #e1e1e1;
@@ -192,4 +193,5 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  object-fit: cover;
 }
