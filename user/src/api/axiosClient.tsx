@@ -12,6 +12,7 @@ const axiosClient = axios.create({
   },
 });
 //tạo api refreshToken
+axiosClient.defaults.withCredentials = true;
 axios.defaults.withCredentials = true;
 const refreshToken = async (): Promise<string | undefined> => {
   try {

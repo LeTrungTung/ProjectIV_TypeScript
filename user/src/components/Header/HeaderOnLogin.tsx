@@ -61,9 +61,9 @@ const HeaderOnLogin: React.FC<HeaderOnLoginProps> = ({
 
   // Logout
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userLogin");
-    window.location.href = "/";
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("userLogin");
+    window.location.href = "/login";
   };
 
   const handleAddImage = () => {

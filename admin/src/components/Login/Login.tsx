@@ -33,16 +33,16 @@ const Login = () => {
     if (password.trim() === "") {
       newErrors.password = "Vui lòng nhập mật khẩu!";
     }
-
+    console.log({ email, password });
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/admin/login",
+        "http://localhost:8000/api/v1/admin/login",
         {
           email,
           password,
         }
       );
-
+      console.log("sfsfdf", response.data);
       const { success, accessToken, role } = response.data;
 
       if (response.data.data.role == 1) {

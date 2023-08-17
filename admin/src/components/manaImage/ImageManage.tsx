@@ -74,7 +74,7 @@ const ImageManage: React.FC = () => {
         </div>
         <div id="header-admin-left">
           <div id="sec-right">
-            <img src="https://i.pinimg.com/236x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg" />
+            <img src={adminLogin?.avatarUser} />
             {/* <IoIosArrowDown id="icon-admin" /> */}
             <div className="wrap-avata-hover1">
               <IoIosArrowDown
@@ -93,7 +93,8 @@ const ImageManage: React.FC = () => {
                   </span>
                   <div className="row-avataemail-name1 hoverto">
                     <img
-                      src="https://cdn.onlinewebfonts.com/svg/img_542942.png"
+                      // src="https://cdn.onlinewebfonts.com/svg/img_542942.png"
+                      src={adminLogin?.avatarUser}
                       alt="avata"
                       className="avata-of"
                     />

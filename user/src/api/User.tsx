@@ -13,6 +13,11 @@ export class UserAPI {
     return axiosClient.post(url, param, { withCredentials: true });
   }
 
+  static deleteCookie() {
+    const url = `api/v1/user/logout`;
+    return axiosClient.post(url);
+  }
+
   static getUsers(): Promise<any> {
     const url = "api/v1/user/get-user";
     return axiosClient.get(url);

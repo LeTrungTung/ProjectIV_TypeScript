@@ -16,7 +16,7 @@ app.use(morgan("dev"));
 // app.use(cors());
 app.use(
   cors({
-    origin: ["http://localhost:5050"],
+    origin: ["http://localhost:5050", "http://localhost:8080"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 200,

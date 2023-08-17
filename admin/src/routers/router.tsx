@@ -18,19 +18,19 @@ const Router: React.FC = () => {
         <Route path="login" index element={<Login />} />
         <Route path="register" element={<Register />} />
       </Route>
-      {/* <Route element={<RequiredAuth />}> */}
-      <Route path="/admin" element={<Admin />} />
-      {/* </Route> */}
-      {/* <Route element={<RequiredAuth />}> */}
-      <Route path="/images" element={<ImageManage />} />
-      {/* </Route> */}
+      <Route element={<RequiredAuth />}>
+        <Route path="/admin" element={<Admin />} />
+      </Route>
+      <Route element={<RequiredAuth />}>
+        <Route path="/images" element={<ImageManage />} />
+      </Route>
 
-      {/* <Route element={<RequiredAuth />}> */}
-      <Route
-        path="/cruddetail/:id"
-        element={<Admin_Detail_Layout children={<CrudDetail />} />}
-      />
-      {/* </Route> */}
+      <Route element={<RequiredAuth />}>
+        <Route
+          path="/cruddetail/:id"
+          element={<Admin_Detail_Layout children={<CrudDetail />} />}
+        />
+      </Route>
 
       <Route path="/" element={<Main />}></Route>
 

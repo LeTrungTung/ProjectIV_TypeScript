@@ -7,7 +7,7 @@ import connectionMySQL from "../../libs/database/db";
 class AdminController {
   async loginAdmin(req: Request, res: Response): Promise<any> {
     const { email, password } = req.body;
-
+    console.log("object333", email);
     try {
       // Kiểm tra thông tin đăng nhập admin trong bảng user
       // const query = `SELECT * FROM users WHERE email = ?`;

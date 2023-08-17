@@ -1,14 +1,38 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import "./Login.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/userSlice";
+import axiosClient from "../../api/axiosClient";
+import { UserAPI } from "../../api/User";
 
-const Login = () => {
-  const [username, setUserName] = useState("");
+function deleteCookie(name: string) {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
+const Login: React.FC = () => {
+  // const [username, setUserName] = useState("");
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (token) {
+      // axiosClient({
+      //   method: 'POST',
+      //   url: '/api/v1/user/logout',
+      // })
+      UserAPI.deleteCookie()
+        .then(() => {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("userLogin");
+          localStorage.removeItem("token");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [repassword, setRepassword] = useState("");
   const [errors, setErrors] = useState({
     email: "",
     password: "",
