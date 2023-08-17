@@ -26,6 +26,10 @@ router.post(
 
 router.get("/get-all-comment", CommentController.handleGetAllComment);
 router.post("/add-comment", CommentController.handlelPostComment);
+router.post(
+  "/add-rep-comment",
+  CommentController.handlelPostRepComment
+);
 router.get(
   "/get-reps-comment/:id",
   CommentController.handleGetRepCommentById

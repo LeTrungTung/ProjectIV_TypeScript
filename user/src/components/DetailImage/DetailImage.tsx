@@ -738,19 +738,44 @@ const DetailImage: React.FC = () => {
     setContentRepComment(event.target.value);
   };
 
-  const handleSaveReply = () => {
-    if (contentRepComment.trim() !== "") {
-      const newReply: ICommentRepply = {
-        idRepComment: replies.length + 1,
-        commentRepId: replyId,
-        userRepCommentId: 15, // Update with appropriate username
-        contentRepComment: contentRepComment,
-        timecreateRep: new Date().toISOString(), // Update with appropriate date format
-      };
+  // const handleSaveReply = () => {
+  //   if (contentRepComment.trim() !== "") {
+  //     const newReply: ICommentRepply = {
+  //       idRepComment: replies.length + 1,
+  //       commentRepId: replyId,
+  //       userRepCommentId: 15, // Update with appropriate username
+  //       contentRepComment: contentRepComment,
+  //       timecreateRep: new Date().toISOString(), // Update with appropriate date format
+  //     };
 
-      setReplies([...replies, newReply]);
-      setReplyId(null);
-      setContentRepComment("");
+  //     setReplies([...replies, newReply]);
+  //     setReplyId(null);
+  //     setContentRepComment("");
+  //   }
+  // };
+
+  const handleAddRepComment = async () => {
+    if (contentRepComment.trim() !== "") {
+      const newRepComment = {
+        commentRepId: replyId,
+        userRepCommentId: userOnLogin?.idUser,
+        contentRepComment: contentRepComment,
+        timecreateRep: new Date().toISOString().split("T")[0],
+      };
+      await CommentAPI.postRepComment(newRepComment)
+        .then((response) => {
+          console.log("RepComment sent successfully:", response.data);
+          // update lại dữ liệu từ DB
+          // ------------------------------------?
+          fetchDataImage();
+          fetchAllRepComment();
+          setContentRepComment("");
+          setReplyId(null);
+        })
+        .catch((error) => {
+          // Xử lý khi gửi bình luận gặp lỗi
+          console.error("Error sending comment:", error);
+        });
     }
   };
 
@@ -951,7 +976,7 @@ const DetailImage: React.FC = () => {
                             </div>
                             <div className="view-comment">
                               <div>
-                                <b>{repitem.username}</b>
+                                <b>{repitem.username} </b>
                                 <span className="content-comment">
                                   {repitem.contentRepComment}
                                 </span>
@@ -960,16 +985,18 @@ const DetailImage: React.FC = () => {
                                 <span>
                                   {repitem.timecreateRep.slice(0, 10)}
                                 </span>
-                                <span className="ans-comment">
+                                <span
+                                  className="ans-comment"
+                                  onClick={() =>
+                                    handleShowAns(comment.idComment)
+                                  }
+                                >
                                   Trả lời
                                 </span>
-                                <span>
-                                  <AiOutlineHeart id="id-heart" />
-                                </span>
+
                                 {/* <span id="count-love-coment1">
                                     
                                   </span> */}
-                                <BsThreeDots id="id-dots1" />
                               </div>
                             </div>
                           </div>
@@ -980,12 +1007,16 @@ const DetailImage: React.FC = () => {
                       {replyId === comment.idComment && (
                         <div className="reply-textarea">
                           <textarea
-                            rows={3}
+                            rows={2}
                             placeholder="Nhập nội dung trả lời..."
                             value={contentRepComment}
                             onChange={handleReplyChange}
+                            className="add-repcomment"
                           />
-                          <button onClick={handleSaveReply}>
+                          <button
+                            onClick={handleAddRepComment}
+                            className="save-rep-comment"
+                          >
                             Lưu
                           </button>
                         </div>

@@ -17,6 +17,10 @@ export class CommentAPI {
     const url = `api/v1/comment/add-comment`;
     return axiosClient.post(url, params);
   }
+  static postRepComment(params: any) {
+    const url = `api/v1/comment/add-rep-comment`;
+    return axiosClient.post(url, params);
+  }
   static getLikeLoveComments() {
     const url = `api/v1/comment/get-like-love-comment`;
     return axiosClient.get(url);

@@ -132,6 +132,36 @@ class CommentController {
     );
   }
 
+  handlelPostRepComment(req: Request, res: Response) {
+    if (!req.body) return;
+    const newRepComment = {
+      commentRepId: req.body.commentRepId,
+      userRepCommentId: req.body.userRepCommentId,
+      contentRepComment: req.body.contentRepComment,
+      timecreateRep: req.body.timecreateRep,
+    };
+    console.log("newRepComment", newRepComment);
+    const insertRepComment = `insert into  rep_comments (commentRepId,userRepCommentId,contentRepComment,timecreateRep) VALUES (?, ?, ?,?)`;
+    connectionMySQL.query(
+      insertRepComment,
+      [
+        newRepComment.commentRepId,
+        newRepComment.userRepCommentId,
+        newRepComment.contentRepComment,
+        newRepComment.timecreateRep,
+      ],
+      (err) => {
+        if (err) {
+          console.log("loi roi");
+          return res.status(500).json({ msg: "Loi server" });
+        }
+        return res
+          .status(200)
+          .json({ msg: "Thêm mới Rep Comment thành công" });
+      }
+    );
+  }
+
   async handleGetRepCommentById(
     req: Request,
     res: Response

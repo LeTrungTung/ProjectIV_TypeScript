@@ -65,6 +65,9 @@
   border-radius: 50%;
   object-fit: cover;
 }
+.avatar-comment img {
+  object-fit: cover;
+}
 #bottom-comment {
   display: flex;
   justify-content: space-between;
@@ -174,6 +177,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit: cover;
 }
 #sp-username {
   font-weight: 700;
@@ -482,4 +486,24 @@
   left: 0;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.6);
+}
+.add-repcomment {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+.save-rep-comment {
+  background-color: grey;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  padding: 5px 8px;
+  height: 30px;
+  vertical-align: middle;
+  line-height: 10px;
+}
+.reply-textarea {
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
 }
