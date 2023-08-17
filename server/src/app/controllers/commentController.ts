@@ -78,6 +78,30 @@ class CommentController {
     }
   }
 
+  async handleGetAllRepComment(
+    _req: Request,
+    res: Response
+  ): Promise<any> {
+    try {
+      connectionMySQL.query(
+        `select * from rep_comments
+        join comments on rep_comments.commentRepId=comments.idComment
+        join users on users.idUser=rep_comments.userRepCommentId`,
+        (err, results) => {
+          if (err) {
+            console.error("Error handling get comments:", err);
+            return res.status(500).json({ msg: "Server error" });
+          }
+
+          return res.status(200).json({ data: results });
+        }
+      );
+    } catch (error) {
+      console.error("Error handling get users:", error);
+      return res.status(500).json({ msg: "Server error" });
+    }
+  }
+
   handlelPostComment(req: Request, res: Response) {
     if (!req.body) return;
     const newComment = {
@@ -106,6 +130,31 @@ class CommentController {
           .json({ msg: "Thêm mới Comment thành công" });
       }
     );
+  }
+
+  async handleGetRepCommentById(
+    req: Request,
+    res: Response
+  ): Promise<any> {
+    try {
+      connectionMySQL.query(
+        `select * from rep_comments
+        join comments on rep_comments.commentRepId=comments.idComment
+        join users on users.idUser=rep_comments.userRepCommentId
+        where commentRepId=${req.params.id}`,
+        (err, results) => {
+          if (err) {
+            console.error("Error handling get followed:", err);
+            return res.status(500).json({ msg: "Server error" });
+          }
+
+          return res.status(200).json({ data: results });
+        }
+      );
+    } catch (error) {
+      console.error("Error handling get followed:", error);
+      return res.status(500).json({ msg: "Server error" });
+    }
   }
 
   // lấy API TỪ bảng like_love_comment

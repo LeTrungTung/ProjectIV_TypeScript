@@ -109,7 +109,7 @@ class UserController {
             // If password matches, generate access token
             if (isPasswordMatch) {
               const accessToken = jwt.sign(user, sceretKey, {
-                expiresIn: "30s",
+                expiresIn: "3600s",
               }); // Token hết hạn trong vòng 30s , vd thêm : 30d ,30m
               const refreshToken: string = jwt.sign(
                 user,
@@ -165,7 +165,7 @@ class UserController {
         ); // Lọc ra những thằng cũ
         // Nếu đúng thì nó sẽ tạo accessToken mới và cả refreshToken mới
         const newAccessToken = jwt.sign(userOther, sceretKey, {
-          expiresIn: "30s",
+          expiresIn: "3600s",
         });
         const newRefreshToken = jwt.sign(
           userOther,

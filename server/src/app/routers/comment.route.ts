@@ -26,6 +26,14 @@ router.post(
 
 router.get("/get-all-comment", CommentController.handleGetAllComment);
 router.post("/add-comment", CommentController.handlelPostComment);
+router.get(
+  "/get-reps-comment/:id",
+  CommentController.handleGetRepCommentById
+);
+router.get(
+  "/get-all-rep-comment",
+  CommentController.handleGetAllRepComment
+);
 
 router.get("/", (res: any) => {
   res.json("Comments Ok");

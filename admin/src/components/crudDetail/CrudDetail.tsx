@@ -48,8 +48,6 @@ const CrudDetail: React.FC = () => {
     fetchImageById(numberId);
   }, []);
 
-  console.log("Image đang chọn====>", imageChoice);
-
   const adminLogin =
     JSON.parse(localStorage.getItem("adminLogin")) || [];
 
@@ -90,10 +88,8 @@ const CrudDetail: React.FC = () => {
   const handleSaveChanges = async (e: React.FormEvent) => {
     e.preventDefault();
     // Handle saving changes logic here
-    console.log("formedit", formEdit);
     // đè dữ liệu của object mới vào object cũ tại id tương ứng
     const updateData = { ...imageChoice[0], ...formEdit };
-    console.log("upData", updateData);
 
     await EditImagebyId(numberId, updateData);
 

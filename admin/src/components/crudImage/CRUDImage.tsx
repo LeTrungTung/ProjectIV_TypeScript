@@ -50,7 +50,6 @@ const CRUDImage: React.FC = () => {
   useEffect(() => {
     fetchAllImage();
   }, []);
-  console.log("ktra list ảnh", listImage);
 
   return (
     <Container id="wrap-cards">

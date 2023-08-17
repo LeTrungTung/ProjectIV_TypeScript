@@ -53,8 +53,6 @@ const UserManage = () => {
     fetchCountFollowOther();
   }, []);
 
-  console.log("ktra mảng đếm follow", countFollowedOther);
-
   const fetchAllUsers = async () => {
     try {
       const response = await UserAPIAdmin.getUsers();
@@ -67,9 +65,7 @@ const UserManage = () => {
     fetchAllUsers();
   }, []);
 
-  console.log("Dach sach nguoi dung", userData);
   const countFLUser = userData?.map((item, index) => index);
-  console.log("List count Follow", countFLUser);
 
   // const [isActive, setIsActive] = useState(true);
 
@@ -84,7 +80,7 @@ const UserManage = () => {
         } else {
           newStatus = 1;
         }
-        console.log("ktra status", newStatus);
+
         // const newStatus = !user.status;
         return {
           ...user,
@@ -96,7 +92,6 @@ const UserManage = () => {
       return user;
     });
     setUserData(updatedUserData);
-    console.log("US sau khi thay đổi", userData);
 
     // Đổi status trên Database
     const editStatus = {

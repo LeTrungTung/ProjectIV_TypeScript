@@ -29,4 +29,12 @@ export class CommentAPI {
     const url = `api/v1/comment/add-like-comment`;
     return axiosClient.post(url, params);
   }
+  static getRepCommentById(id: number) {
+    const url = `/api/v1/comment/get-reps-comment/${id}`;
+    return axiosClient.get(url);
+  }
+  static getAllRepComment() {
+    const url = "api/v1/comment/get-all-rep-comment";
+    return axiosClient.get(url);
+  }
 }

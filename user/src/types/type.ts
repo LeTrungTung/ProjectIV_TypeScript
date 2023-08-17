@@ -48,6 +48,7 @@ export interface ImageComment {
   timecreate: string;
   avatarUser: string | null;
 }
+
 export interface IOperationImage {
   idOperationImage?: number;
   imageOperationId: number;
@@ -92,6 +93,23 @@ export interface IComment {
   userCommentId: number;
   content: string;
   timecreate: string;
+}
+export interface ICommentRepply {
+  idRepComment: number;
+  commentRepId: number | null;
+  userRepCommentId: number;
+  contentRepComment: string;
+  timecreateRep: string;
+}
+export interface IRepComment {
+  idComment: number;
+  idRepComment: number;
+  commentRepId: number | null;
+  userRepCommentId: number;
+  contentRepComment: string;
+  timecreateRep: string;
+  username: string;
+  avatarUser: string | null;
 }
 export interface IFollow {
   idFollow?: number;

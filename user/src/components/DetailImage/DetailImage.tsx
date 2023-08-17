@@ -15,7 +15,11 @@ import { ImageAPI } from "../../api/Image";
 import { UserAPI } from "../../api/User";
 import { CommentAPI } from "../../api/Comment";
 import { FollowAPI } from "../../api/Follow";
-import { ImageChoice } from "../../types/type";
+import {
+  ICommentRepply,
+  IRepComment,
+  ImageChoice,
+} from "../../types/type";
 import { IDataUser } from "../../types/type";
 import { ISaveImage } from "../../types/type";
 import { ImageComment } from "../../types/type";
@@ -35,6 +39,9 @@ const DetailImage: React.FC = () => {
   const [imageList, setImageList] = useState<ImageComment[]>([]);
   const [imageChoice, setImageChoice] = useState<ImageChoice[]>([]);
   const [userList, setUserList] = useState<IDataUser[]>([]);
+  const [repCommentList, setRepCommentList] = useState<IRepComment[]>(
+    []
+  );
   const [loveCommentList, setLoveCommentList] = useState<
     ILikeLoveComment[]
   >([]);
@@ -62,6 +69,7 @@ const DetailImage: React.FC = () => {
     IDataUser[]
   >([]);
   const [userFollowed, setUserFollowed] = useState([]);
+  const [idCommentOnRep, setIdCommentOnRep] = useState<number>(0);
   // const [isCallFollow, setIsCallFollow] = useState(true);
   const [imageSaved, setImageSaved] = useState<ISaveImage[]>([]);
   const [likeLoveComment, setLikeLoveComment] = useState<
@@ -193,16 +201,39 @@ const DetailImage: React.FC = () => {
       console.error("Error retrieving data: ", error);
     }
   };
+
   useEffect(() => {
     fetchUserFollowed(idUserCreate);
   }, [idUserCreate]);
+
   console.log("setUserFollowed", userFollowed);
   console.log("usersCreateImage", usersCreateImage[0]?.idUser);
+
+  const fetchAllRepComment = async () => {
+    try {
+      const response = await CommentAPI.getAllRepComment();
+      setRepCommentList(response.data.data);
+      console.log("object77", response.data.data);
+    } catch (error) {
+      console.error("Error retrieving data: ", error);
+    }
+  };
+  useEffect(() => {
+    fetchAllRepComment();
+  }, []);
 
   const commentList = imageList.filter(
     (Comment) => Comment.imageCommentId === numberId
   );
   console.log("commentList", commentList);
+
+  const dataRepCommentList = commentList?.map((comment) => {
+    const matchingRep = repCommentList.filter(
+      (item) => item.commentRepId === comment.idComment
+    );
+    return matchingRep.map((item) => item);
+  });
+  console.log("dataRepCommentList", dataRepCommentList);
 
   // gọi dữ liệu API Comment lấy số lượt yêu thích "Love", "Like"
   const fetchDataComment = async () => {
@@ -210,9 +241,9 @@ const DetailImage: React.FC = () => {
       const response1 = await CommentAPI.getLoveComments();
       const response2 = await CommentAPI.getLikeComments();
       const response3 = await CommentAPI.getAllComments();
-      console.log("loveComment====>", response1.data.data);
-      console.log("likeComment====>", response2.data.data);
-      console.log("AllComment====>", response3.data.data);
+      // console.log("loveComment====>", response1.data.data);
+      // console.log("likeComment====>", response2.data.data);
+      // console.log("AllComment====>", response3.data.data);
       setLoveCommentList(response1.data.data);
       setLikeCommentList(response2.data.data);
       setAllCommentList(response3.data.data);
@@ -691,6 +722,38 @@ const DetailImage: React.FC = () => {
     navigate(`/profile/${idUserCreate}`);
   };
 
+  // --------------Trả lời comment --------------------
+  const [replyId, setReplyId] = useState<number | null>(null);
+  const [contentRepComment, setContentRepComment] =
+    useState<string>("");
+  const [replies, setReplies] = useState<ICommentRepply[]>([]);
+
+  const handleShowAns = (commentId: number) => {
+    setReplyId(commentId);
+  };
+
+  const handleReplyChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setContentRepComment(event.target.value);
+  };
+
+  const handleSaveReply = () => {
+    if (contentRepComment.trim() !== "") {
+      const newReply: ICommentRepply = {
+        idRepComment: replies.length + 1,
+        commentRepId: replyId,
+        userRepCommentId: 15, // Update with appropriate username
+        contentRepComment: contentRepComment,
+        timecreateRep: new Date().toISOString(), // Update with appropriate date format
+      };
+
+      setReplies([...replies, newReply]);
+      setReplyId(null);
+      setContentRepComment("");
+    }
+  };
+
   return (
     <Container id="wrap-detail">
       <div id="left-area">
@@ -791,7 +854,15 @@ const DetailImage: React.FC = () => {
                       </div>
                       <div className="action-comment">
                         <span>{comment.timecreate.slice(0, 10)}</span>
-                        <span className="ans-comment">Trả lời</span>
+                        <span
+                          className="ans-comment"
+                          onClick={() =>
+                            handleShowAns(comment.idComment)
+                          }
+                        >
+                          Trả lời
+                        </span>
+
                         <span className="ans-heart">
                           {/* đếm số lượt yêu thích */}
                           {loveByCommentList[index] > 0 ? (
@@ -861,6 +932,64 @@ const DetailImage: React.FC = () => {
                           <BsThreeDots id="id-dots" />
                         </span>
                       </div>
+                      {/* Hiển thị danh sách trả lời */}
+                      {dataRepCommentList[index].map((repitem) => (
+                        <div key={repitem.idRepComment}>
+                          <div className="show-comment-repply">
+                            <div className="avatar-comment">
+                              {repitem.avatarUser == null ? (
+                                <img
+                                  src="https://cdn.onlinewebfonts.com/svg/img_542942.png"
+                                  alt="avatar"
+                                />
+                              ) : (
+                                <img
+                                  src={repitem.avatarUser}
+                                  alt="avatar"
+                                />
+                              )}
+                            </div>
+                            <div className="view-comment">
+                              <div>
+                                <b>{repitem.username}</b>
+                                <span className="content-comment">
+                                  {repitem.contentRepComment}
+                                </span>
+                              </div>
+                              <div className="action-comment">
+                                <span>
+                                  {repitem.timecreateRep.slice(0, 10)}
+                                </span>
+                                <span className="ans-comment">
+                                  Trả lời
+                                </span>
+                                <span>
+                                  <AiOutlineHeart id="id-heart" />
+                                </span>
+                                {/* <span id="count-love-coment1">
+                                    
+                                  </span> */}
+                                <BsThreeDots id="id-dots1" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+
+                      {/* Hiển thị textarea để nhập nội dung trả lời */}
+                      {replyId === comment.idComment && (
+                        <div className="reply-textarea">
+                          <textarea
+                            rows={3}
+                            placeholder="Nhập nội dung trả lời..."
+                            value={contentRepComment}
+                            onChange={handleReplyChange}
+                          />
+                          <button onClick={handleSaveReply}>
+                            Lưu
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 );

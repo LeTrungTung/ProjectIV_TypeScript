@@ -21,7 +21,6 @@ const RequireAuth: React.FC = () => {
       } else {
         // nếu hết hạng thì hiện popup thông báo hết phiên
         setExp(true);
-        console.log(1111, "Hết hạn");
       }
     } catch (error) {
       // nếu cố ý nhập bậy token thì cho về login

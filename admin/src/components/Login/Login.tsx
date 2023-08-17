@@ -44,7 +44,7 @@ const Login = () => {
       );
 
       const { success, accessToken, role } = response.data;
-      console.log(111, response.data);
+
       if (response.data.data.role == 1) {
         // Lưu accessToken vào localStorage
         localStorage.setItem("accessToken", accessToken);

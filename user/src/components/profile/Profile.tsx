@@ -31,7 +31,6 @@ const Profile: React.FC<ProfileProps> = (props) => {
   const [isCallImage, setIsCallImage] = useState(true);
   const [isCallFollow, setIsCallFollow] = useState(true);
   // const idUser = valueIdUser;
-  console.log("idUsser", idUser);
   // console.log("idUserCreate", idUserCreate);
   const [showRenderUserFollowed, setShowRenderUserFollowed] =
     useState(false);
@@ -44,7 +43,6 @@ const Profile: React.FC<ProfileProps> = (props) => {
     const fetchDataUser = async () => {
       try {
         const response = await UserAPI.getUsers();
-        console.log("get users successfully:", response.data.data);
         setUsers(response.data.data);
       } catch (error) {
         console.error("Error get User:", error);
@@ -52,13 +50,11 @@ const Profile: React.FC<ProfileProps> = (props) => {
     };
     fetchDataUser();
   }, []);
-  console.log("ktra users", users);
 
   useEffect(() => {
     const fetchDataUserById = async (id: number) => {
       try {
         const response = await UserAPI.getUserById(id);
-        console.log("get user successfully:", response.data.data);
         setListUser(response.data.data);
       } catch (error) {
         console.error("Error get User:", error);
@@ -66,7 +62,6 @@ const Profile: React.FC<ProfileProps> = (props) => {
     };
     fetchDataUserById(idUser);
   }, []);
-  console.log("ktra list user", listUser);
 
   useEffect(() => {
     const fetchUserJoinImage = async (id: number) => {
@@ -116,7 +111,6 @@ const Profile: React.FC<ProfileProps> = (props) => {
     // Chỉ trả về true nếu findUser không bằng undefined
     return findUser !== undefined;
   });
-  console.log("usersFollowed", usersFollowed);
 
   const [isCreatedActive, setIsCreatedActive] = useState(false);
 
