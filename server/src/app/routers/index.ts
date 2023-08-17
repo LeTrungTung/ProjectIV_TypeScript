@@ -12,6 +12,7 @@ import followRouter from "./follow_user.route";
 import adminRouter from "./admin.route";
 import uploadOne from "./upload_one.route";
 import uploadImageRoute from "./uploadImage.route";
+import notificationRouter from "./notification.router";
 
 function Routes(app: Express) {
   app.use("/api/v1/user", userRouter);
@@ -22,6 +23,7 @@ function Routes(app: Express) {
 
   app.use("/api/v1/upload-one", uploadOne);
   app.use("/api/v1/upload-image", uploadImageRoute);
+  app.use("/api/v1/notifications", notificationRouter);
 
   app.use("/", (_req, res: any) => {
     res.json("Hello Project Pinterest");

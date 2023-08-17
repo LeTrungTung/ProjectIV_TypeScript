@@ -15,21 +15,15 @@ import { ImageAPI } from "../../api/Image";
 import { UserAPI } from "../../api/User";
 import { CommentAPI } from "../../api/Comment";
 import { FollowAPI } from "../../api/Follow";
-import {
-  ICommentRepply,
-  IRepComment,
-  ImageChoice,
-} from "../../types/type";
+import { IRepComment, ImageChoice } from "../../types/type";
 import { IDataUser } from "../../types/type";
 import { ISaveImage } from "../../types/type";
 import { ImageComment } from "../../types/type";
 import { IOperationImage } from "../../types/type";
 import { IFollowUser } from "../../types/type";
 import { ILikeLoveComment } from "../../types/type";
-import { IComment } from "../../types/type";
 import { ILikeLoveImage } from "../../types/type";
 import { IFollow } from "../../types/type";
-import { IDataUserById } from "../../types/type";
 import { useSelector } from "react-redux";
 
 const DetailImage: React.FC = () => {
@@ -58,7 +52,6 @@ const DetailImage: React.FC = () => {
     IOperationImage[]
   >([]);
   const [allCommentList, setAllCommentList] = useState([]);
-  const [isCall, setIsCall] = useState(true);
   const [isCallUser, setIsCallUser] = useState(true);
   const [isComment, setIsComment] = useState(true);
   const [isFollow, setIsFollow] = useState(true);
@@ -69,8 +62,6 @@ const DetailImage: React.FC = () => {
     IDataUser[]
   >([]);
   const [userFollowed, setUserFollowed] = useState([]);
-  const [idCommentOnRep, setIdCommentOnRep] = useState<number>(0);
-  // const [isCallFollow, setIsCallFollow] = useState(true);
   const [imageSaved, setImageSaved] = useState<ISaveImage[]>([]);
   const [likeLoveComment, setLikeLoveComment] = useState<
     ILikeLoveComment[]
@@ -83,7 +74,6 @@ const DetailImage: React.FC = () => {
   );
   const [statusFollow, setStatusFollow] = useState(false);
   const dataUpdateName = useSelector((state: any) => state.editName);
-  console.log(dataUpdateName);
   const userLogin =
     JSON.parse(localStorage.getItem("userLogin")) || [];
   const navigate = useNavigate();
@@ -130,7 +120,6 @@ const DetailImage: React.FC = () => {
     };
   }, [isCallImage]);
   const idUserCreate = usersCreateImage[0]?.idUser;
-  console.log("idUser======", idUserCreate);
 
   // gọi dữ liệu API lấy image by Id
   useEffect(() => {
@@ -170,16 +159,13 @@ const DetailImage: React.FC = () => {
     };
   }, [isCallUser]);
 
-  console.log("userList====>", userList);
   const userOnLogin = userList.find(
     (item) => item.idUser === userLogin?.idUser
   );
-  console.log("userOnLogin", userOnLogin);
   // gọi dữ liệu API images
   const fetchDataImage = async () => {
     try {
       const response = await ImageAPI.getAllImages_Comments();
-      console.log(2222, response);
       setImageList(response.data.data);
     } catch (error) {
       console.error("Error retrieving data: ", error);
@@ -206,9 +192,6 @@ const DetailImage: React.FC = () => {
     fetchUserFollowed(idUserCreate);
   }, [idUserCreate]);
 
-  console.log("setUserFollowed", userFollowed);
-  console.log("usersCreateImage", usersCreateImage[0]?.idUser);
-
   const fetchAllRepComment = async () => {
     try {
       const response = await CommentAPI.getAllRepComment();
@@ -225,7 +208,6 @@ const DetailImage: React.FC = () => {
   const commentList = imageList.filter(
     (Comment) => Comment.imageCommentId === numberId
   );
-  console.log("commentList", commentList);
 
   const dataRepCommentList = commentList?.map((comment) => {
     const matchingRep = repCommentList.filter(
@@ -233,7 +215,6 @@ const DetailImage: React.FC = () => {
     );
     return matchingRep.map((item) => item);
   });
-  console.log("dataRepCommentList", dataRepCommentList);
 
   // gọi dữ liệu API Comment lấy số lượt yêu thích "Love", "Like"
   const fetchDataComment = async () => {
@@ -241,9 +222,6 @@ const DetailImage: React.FC = () => {
       const response1 = await CommentAPI.getLoveComments();
       const response2 = await CommentAPI.getLikeComments();
       const response3 = await CommentAPI.getAllComments();
-      // console.log("loveComment====>", response1.data.data);
-      // console.log("likeComment====>", response2.data.data);
-      // console.log("AllComment====>", response3.data.data);
       setLoveCommentList(response1.data.data);
       setLikeCommentList(response2.data.data);
       setAllCommentList(response3.data.data);
@@ -315,26 +293,20 @@ const DetailImage: React.FC = () => {
   const countLoveImage = arrLoveByImage.length;
 
   const countLikeLoveImage = countLikeImage + countLoveImage;
-  console.log("countLikeLoveImage", countLikeLoveImage);
 
   // tìm idUser đã tạo ra ảnh đang xem
   const findUserCreateImage = followUserList.find(
     (item) => item.idImage == numberId
   );
-  console.log("findUserCreateImagend", findUserCreateImage?.idUser);
   // đếm số lượt được follow của user này
   const countFollowUser = followUserList.filter(
     (item) => item.idUser === findUserCreateImage?.idUser
   ).length;
-  console.log("countFollowUser", countFollowUser);
 
   const imageViewDetail = imageList.find(
     (image) => image.idImage === numberId
   );
-  console.log("imgList", imageList);
-
   const [comment, setComment] = useState("");
-
   // Đếm số lượng Love của từng comment trong commentList
   const loveByCommentList = commentList?.map(
     (comment) =>
@@ -342,7 +314,6 @@ const DetailImage: React.FC = () => {
         (love) => love.idComment == comment.idComment
       ).length
   );
-  console.log(loveByCommentList);
   // tạo ra mảng gồm danh sách các user thích comment đang tương tác
   const arrUserloveComment = commentList?.map((comment) =>
     loveCommentList?.filter(
@@ -350,9 +321,6 @@ const DetailImage: React.FC = () => {
     )
   );
   console.log("Arr user love comment", arrUserloveComment);
-
-  console.log("Dem love của từng comment", loveByCommentList);
-  console.log("all comment===>", allCommentList);
 
   const handleCommentChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -373,7 +341,6 @@ const DetailImage: React.FC = () => {
         .then((response) => {
           console.log("Comment sent successfully:", response.data);
           // update lại dữ liệu từ DB
-          // ------------------------------------?
           fetchDataImage();
           setComment("");
         })
@@ -388,16 +355,11 @@ const DetailImage: React.FC = () => {
   const countComments = imageList?.filter(
     (imageJoinComment) => imageJoinComment.imageCommentId === numberId
   );
-  console.log("countComments", countComments.length);
   // đếm số lượng tim yêu thích của từng comment
-
   const handleHeartClick = async (id: number) => {
     const commentHeart = imageList?.find(
       (imageJoinComment) => imageJoinComment.idComment === id
     );
-    console.log("comment click ====>", commentHeart);
-    console.log("Id comment ====>", id);
-
     // gọi bảng like_love_comment về
     const fetchLikeLoveComment = async () => {
       try {
@@ -415,9 +377,7 @@ const DetailImage: React.FC = () => {
         item.commentLikeLoveId === id &&
         item.userLoveCommentId === userLogin?.idUser
     );
-    console.log(777, findComment);
     if (findComment?.length > 0) {
-      // console.log(888, "đã thả tim rồi thì xoá tim đi");
       const handleDeleteLikeAtComment = async (id: number) => {
         try {
           await CommentAPI.deleteLikeAtComment(id);
@@ -427,19 +387,15 @@ const DetailImage: React.FC = () => {
         }
       };
       const idDeleteLike = findComment[0]?.idLikeLoveComment;
-      console.log(99, idDeleteLike);
       handleDeleteLikeAtComment(idDeleteLike);
       fetchDataComment();
       fetchDataImage();
     } else {
-      // console.log(888, "chưa thả tim thì add tim vào");
-
       const newLikeComment = {
         commentLikeLoveId: id,
         userLikeCommentId: null,
         userLoveCommentId: userLogin?.idUser,
       };
-      console.log(1010, newLikeComment);
       await CommentAPI.postLikeAtComment(newLikeComment)
         .then((response) => {
           console.log(
@@ -457,7 +413,6 @@ const DetailImage: React.FC = () => {
   };
   // kiểm tra ảnh đang xem đã được lưu chưa
   let isSaved = false;
-
   const handleSaveImage = async () => {
     // nếu trạng thái chưa lưu thì lưu ảnh vào bảng images_saved_user tại DB
     if (!imageStoreSaved) {
@@ -502,24 +457,13 @@ const DetailImage: React.FC = () => {
   };
 
   // Xử lý biểu tượng cảm xúc hình ảnh
-  const [showIcons, setShowIcons] = useState(false);
   const [chooseIcon, setChooseIcon] = useState<JSX.Element | null>(
     null
   );
-  const handleMouseOver = () => {
-    setShowIcons(true);
-  };
-  const handleMouseOut = () => {
-    setShowIcons(false);
-  };
   // lấy dư liệu bảng operation image
   const fetchOperationImage = async () => {
     try {
       const response = await ImageAPI.getOperationImage();
-      console.log(
-        "getOperationImage successfully:",
-        response.data.data
-      );
       setOperationImage(response.data.data);
     } catch (error) {
       console.error("Error get OperationImage:", error);
@@ -531,7 +475,6 @@ const DetailImage: React.FC = () => {
 
   const handleIconClick = async (icon: string) => {
     // Xử lý khi người dùng chọn biểu tượng
-    console.log("operationImage:", operationImage);
     let findArrLoveImage = operationImage?.filter(
       (item) =>
         item.imageOperationId == numberId &&
@@ -542,8 +485,6 @@ const DetailImage: React.FC = () => {
         item.imageOperationId == numberId &&
         item.userLikeImageId == userLogin?.idUser
     );
-    console.log("findArrLoveImage", findArrLoveImage);
-    console.log("findArrLikeImage", findArrLikeImage);
     if (icon == "heart") {
       setChooseIcon(<BiSolidHappyHeartEyes />);
       if (findArrLoveImage?.length > 0) {
@@ -680,7 +621,6 @@ const DetailImage: React.FC = () => {
   const ListFollowedbyUserLogin = userFollowOthers.filter(
     (item) => item.userFollowedbyId === usersCreateImage[0]?.idUser
   );
-  console.log("222222", ListFollowedbyUserLogin);
   const handleFollowUserCreatedImg = () => {
     if (ListFollowedbyUserLogin.length > 0) {
       // Bỏ theo dõi
@@ -726,7 +666,6 @@ const DetailImage: React.FC = () => {
   const [replyId, setReplyId] = useState<number | null>(null);
   const [contentRepComment, setContentRepComment] =
     useState<string>("");
-  const [replies, setReplies] = useState<ICommentRepply[]>([]);
 
   const handleShowAns = (commentId: number) => {
     setReplyId(commentId);
@@ -737,22 +676,6 @@ const DetailImage: React.FC = () => {
   ) => {
     setContentRepComment(event.target.value);
   };
-
-  // const handleSaveReply = () => {
-  //   if (contentRepComment.trim() !== "") {
-  //     const newReply: ICommentRepply = {
-  //       idRepComment: replies.length + 1,
-  //       commentRepId: replyId,
-  //       userRepCommentId: 15, // Update with appropriate username
-  //       contentRepComment: contentRepComment,
-  //       timecreateRep: new Date().toISOString(), // Update with appropriate date format
-  //     };
-
-  //     setReplies([...replies, newReply]);
-  //     setReplyId(null);
-  //     setContentRepComment("");
-  //   }
-  // };
 
   const handleAddRepComment = async () => {
     if (contentRepComment.trim() !== "") {
